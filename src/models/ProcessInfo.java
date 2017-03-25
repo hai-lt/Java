@@ -1,11 +1,11 @@
 package models;
 
-public class Process {
+public class ProcessInfo {
 	private String user, status, name;
 	private long id;
 	private float cpu, mem;
 
-	public Process(String user, String status, String name, long id, float cpu, float mem) {
+	public ProcessInfo(String user, String status, String name, long id, float cpu, float mem) {
 		this.user = user;
 		this.status = status;
 		this.name = name;
