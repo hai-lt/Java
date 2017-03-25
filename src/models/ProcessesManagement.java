@@ -6,12 +6,14 @@ import java.util.Comparator;
 /**
  * 
  * @author tanhai
- * <li>Manage the processes of an OS
+ *         <li>Manage the processes of an OS
  */
 public abstract class ProcessesManagement {
 	public static final int DESC = -1;
 	public static final int ASC = 1;
 	private ArrayList<Process> processes;
+
+	public abstract void ProcessesManagement();
 
 	public abstract Process killProcess(long pid);
 
@@ -24,6 +26,11 @@ public abstract class ProcessesManagement {
 		return null;
 	}
 
+	public ProcessesManagement(ArrayList<Process> processes) {
+		super();
+		this.processes = processes;
+	}
+
 	/**
 	 * 
 	 * @return {@link ArrayList} of {@link Process} object in descrease order
@@ -34,6 +41,7 @@ public abstract class ProcessesManagement {
 
 	/**
 	 * Sort processes by PID
+	 *
 	 * @param order
 	 *            {@link ProcessesManagement}.<b><i>DESC</i></b> in order to
 	 *            sort by less than, ortherwise you can use
@@ -50,4 +58,13 @@ public abstract class ProcessesManagement {
 		});
 		return processes;
 	}
+
+	public ArrayList<Process> getProcesses() {
+		return processes;
+	}
+
+	public void setProcesses(ArrayList<Process> processes) {
+		this.processes = processes;
+	}
+
 }
