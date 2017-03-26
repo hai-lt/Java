@@ -61,4 +61,9 @@ public class Memory {
   public void setUsable(long usable) {
     this.usable = usable;
   }
+
+  @Override
+  public String toString() {
+    return "Name: " + name + "; Path: " + path + "; Total: " + total + "; Free: " + free + "; Usable: " + usable;
+  }
 }
