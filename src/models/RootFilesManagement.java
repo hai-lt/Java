@@ -8,15 +8,14 @@ public class RootFilesManagement {
   private ArrayList<Memory> memories;
 
   public RootFilesManagement(File[] roots) {
-    this.roots = roots;
     memories = new ArrayList<>();
-    for (File root : roots) {
-      memories.add(new Memory(root));
-    }
+    setRoots(roots);
   }
 
   public RootFilesManagement() {
-    new RootFilesManagement(File.listRoots());
+    roots = File.listRoots();
+    memories = new ArrayList<>();
+    setRoots(roots);
   }
 
   public File[] getRoots() {
@@ -25,14 +24,13 @@ public class RootFilesManagement {
 
   public void setRoots(File[] roots) {
     this.roots = roots;
+    memories.clear();
+    for (File root : roots) {
+      memories.add(new Memory(root));
+    }
   }
 
   public ArrayList<Memory> getMemories() {
     return memories;
   }
-
-  public void setMemories(ArrayList<Memory> memories) {
-    this.memories = memories;
-  }
-
 }
