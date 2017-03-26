@@ -22,6 +22,11 @@ public abstract class ProcessesManagement {
     return null;
   }
 
+  public ProcessesManagement() {
+    processes = new ArrayList<>();
+    loadProcesses();
+  }
+
   public ProcessesManagement(ArrayList<ProcessInfo> processes) {
     this.processes = processes;
   }
@@ -73,4 +78,14 @@ public abstract class ProcessesManagement {
   public abstract ArrayList<ProcessInfo> loadProcesses();
 
   public abstract String[] getTitles();
+
+  public String breeze(String string) {
+    String result = "";
+    for (String word : string.split(" ")) {
+      if (!word.equals("")) {
+        result += word.trim() + " ";
+      }
+    }
+    return result;
+  }
 }
