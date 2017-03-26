@@ -11,6 +11,10 @@ public class WindowProcesses extends ProcessesManagement {
     super(processes);
   }
 
+  public WindowProcesses() {
+    super();
+  }
+
   public String getListProcessesCommand() {
     return GET_LIST_PROCESSES_COMMAND;
   }
@@ -22,8 +26,11 @@ public class WindowProcesses extends ProcessesManagement {
       BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
       String line;
       processes.clear();
+      // Remove 2 first lines which is the titles of the processes in Window OS
+      input.readLine();
+      input.readLine();
       while ((line = input.readLine()) != null) {
-        processes.add(new WindowProcess(line));
+        processes.add(new WindowProcess(breeze(line)));
       }
       input.close();
       return processes;
