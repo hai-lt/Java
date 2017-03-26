@@ -23,7 +23,7 @@ public class WindowProcesses extends ProcessesManagement {
 			String line;
 			processes.clear();
 			while ((line = input.readLine()) != null) {
-				processes.add(WindowProcess.create(line));
+				processes.add(new WindowProcess(line));
 			}
 			input.close();
 			return processes;

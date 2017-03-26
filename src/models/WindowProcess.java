@@ -19,11 +19,7 @@ public class WindowProcess extends ProcessInfo {
 		super();
 	}
 
-	public WindowProcess(String user, String status, String name, long id, float cpu, float mem) {
-		super(user, status, name, id, cpu, mem);
-	}
-
-	public static ProcessInfo create(String string) {
+	public WindowProcess(String string) {
 		String[] values = string.split(" ");
 		String user = values[POSITION_USER];
 		String status = values[POSITION_STATUS];
@@ -31,7 +27,10 @@ public class WindowProcess extends ProcessInfo {
 		long id = Long.parseLong(values[POSITION_PID]);
 		float cpu = Float.parseFloat(values[POSITION_CPU]);
 		float mem = Float.parseFloat(values[POSITION_MEM]);
-		return new WindowProcess(user, status, name, id, cpu, mem);
+		setAttributes(user, status, name, id, cpu, mem);
 	}
 
+	public WindowProcess(String user, String status, String name, long id, float cpu, float mem) {
+		super(user, status, name, id, cpu, mem);
+	}
 }

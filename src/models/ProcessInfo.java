@@ -43,6 +43,15 @@ public abstract class ProcessInfo {
 		return mem;
 	}
 
+	public void setAttributes(String user, String status, String name, long id, float cpu, float mem) {
+		this.user = user;
+		this.status = status;
+		this.name = name;
+		this.id = id;
+		this.cpu = cpu;
+		this.mem = mem;
+	}
+
 	public ProcessInfo kill() {
 		try {
 			Runtime.getRuntime().exec(getKillProcessCommand() + getId());
