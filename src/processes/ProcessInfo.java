@@ -1,4 +1,4 @@
-package models;
+package processes;
 
 public abstract class ProcessInfo {
   private String user, status, name;

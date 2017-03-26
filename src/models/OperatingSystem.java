@@ -1,5 +1,10 @@
 package models;
 
+import memories.RootFilesManagement;
+import processes.ProcessesManagement;
+import processes.UnixProcesses;
+import processes.WindowProcesses;
+
 public class OperatingSystem {
   private String name;
   private ProcessesManagement processesManagement;

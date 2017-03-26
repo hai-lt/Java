@@ -1,36 +1,31 @@
-package models;
+package processes;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class WindowProcesses extends ProcessesManagement {
-  private final String GET_LIST_PROCESSES_COMMAND = "tasklist ";
+public class UnixProcesses extends ProcessesManagement {
+  private static String LIST_PROCESSES_COMMAND = "ps aux --sort -rss";
 
-  public WindowProcesses(ArrayList<ProcessInfo> processes) {
+  public UnixProcesses(ArrayList<ProcessInfo> processes) {
     super(processes);
   }
 
-  public WindowProcesses() {
+  public UnixProcesses() {
     super();
-  }
-
-  public String getListProcessesCommand() {
-    return GET_LIST_PROCESSES_COMMAND;
   }
 
   @Override
   public ArrayList<ProcessInfo> loadProcesses() {
     try {
-      Process p = Runtime.getRuntime().exec(getListProcessesCommand());
+      Process p = Runtime.getRuntime().exec(LIST_PROCESSES_COMMAND);
       BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
       String line;
       processes.clear();
-      // Remove 2 first lines which is the titles of the processes in Window OS
-      input.readLine();
+//      remove the first line which is the titles of the processes
       input.readLine();
       while ((line = input.readLine()) != null) {
-        processes.add(new WindowProcess(breeze(line)));
+        processes.add(new UnixProcess(breeze(line)));
       }
       input.close();
       return processes;
@@ -42,6 +37,7 @@ public class WindowProcesses extends ProcessesManagement {
 
   @Override
   public String[] getTitles() {
-    return WindowProcess.TITLES;
+    return UnixProcess.TITLES;
   }
+
 }
