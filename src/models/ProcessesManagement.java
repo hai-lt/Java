@@ -11,9 +11,7 @@ import java.util.Comparator;
 public abstract class ProcessesManagement {
 	public static final int DESC = -1;
 	public static final int ASC = 1;
-	private ArrayList<ProcessInfo> processes;
-
-	public abstract ProcessInfo killProcess(long pid);
+	protected ArrayList<ProcessInfo> processes;
 
 	public ProcessInfo find(long pid) {
 		for (ProcessInfo process : processes) {
@@ -30,7 +28,8 @@ public abstract class ProcessesManagement {
 
 	/**
 	 * 
-	 * @return {@link ArrayList} of {@link ProcessInfo} object in descrease order
+	 * @return {@link ArrayList} of {@link ProcessInfo} object in descrease
+	 *         order
 	 */
 	public ArrayList<ProcessInfo> orderByPid() {
 		return orderByPid(DESC);
@@ -64,4 +63,15 @@ public abstract class ProcessesManagement {
 		this.processes = processes;
 	}
 
+	public ProcessInfo killProcessPid(long pid) {
+		ProcessInfo processInfo = find(pid);
+		if (processInfo != null) {
+			return processInfo.kill();
+		}
+		return null;
+	}
+
+	public abstract ArrayList<ProcessInfo> loadProcesses();
+
+	public abstract String[] getTitles();
 }
