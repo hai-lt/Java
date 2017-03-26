@@ -11,6 +11,10 @@ public class UnixProcesses extends ProcessesManagement {
     super(processes);
   }
 
+  public UnixProcesses() {
+    super();
+  }
+
   @Override
   public ArrayList<ProcessInfo> loadProcesses() {
     try {
@@ -18,8 +22,10 @@ public class UnixProcesses extends ProcessesManagement {
       BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
       String line;
       processes.clear();
+//      remove the first line which is the titles of the processes
+      input.readLine();
       while ((line = input.readLine()) != null) {
-        processes.add(new UnixProcess(line));
+        processes.add(new UnixProcess(breeze(line)));
       }
       input.close();
       return processes;
