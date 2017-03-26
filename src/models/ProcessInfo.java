@@ -61,4 +61,9 @@ public abstract class ProcessInfo {
 			return null;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return id + ", " + user + ", " + cpu + ", " + mem + ", " + status + ", " + name + ", ";
+	}
 }
