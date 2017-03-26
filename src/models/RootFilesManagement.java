@@ -13,9 +13,8 @@ public class RootFilesManagement {
   }
 
   public RootFilesManagement() {
-    roots = File.listRoots();
     memories = new ArrayList<>();
-    setRoots(roots);
+    setRoots(File.listRoots());
   }
 
   public File[] getRoots() {
