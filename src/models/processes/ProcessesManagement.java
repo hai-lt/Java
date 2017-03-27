@@ -1,4 +1,4 @@
-package processes;
+package models.processes;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package processes;
+package models.processes;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

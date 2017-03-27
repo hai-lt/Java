@@ -1,4 +1,4 @@
-package memories;
+package models.memories;
 
 import java.io.File;
 import java.util.ArrayList;
