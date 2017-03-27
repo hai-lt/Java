@@ -1,9 +1,9 @@
-package models;
+package models.os;
 
-import memories.RootFilesManagement;
-import processes.ProcessesManagement;
-import processes.UnixProcesses;
-import processes.WindowProcesses;
+import models.memories.RootFilesManagement;
+import models.processes.ProcessesManagement;
+import models.processes.UnixProcesses;
+import models.processes.WindowProcesses;
 
 public class OperatingSystem {
   private String name;
