@@ -1,5 +1,7 @@
 package models.processes;
 
+import java.util.Vector;
+
 public class UnixProcess extends ProcessInfo {
   private final static String KILL_PROCESS_COMMAND = "kill -9 ";
   public final static String[] TITLES = { "User", "Status", "Name", "Pid", "%Cpu", "%Mem" };
@@ -33,6 +35,18 @@ public class UnixProcess extends ProcessInfo {
 
   public UnixProcess(String user, String status, String name, long id, float cpu, float mem) {
     super(user, status, name, id, cpu, mem);
+  }
+
+  @Override
+  public Vector<String> toVector() {
+    Vector<String> value = new Vector<>();
+    value.add(getUser());
+    value.add(getStatus());
+    value.add(getName());
+    value.add(String.valueOf(getId()));
+    value.add(String.valueOf(getCpu()));
+    value.add(String.valueOf(getMem()));
+    return value;
   }
 
 }

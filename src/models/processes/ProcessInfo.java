@@ -1,11 +1,15 @@
 package models.processes;
 
+import java.util.Vector;
+
 public abstract class ProcessInfo {
   private String user, status, name;
   private long id;
   private float cpu, mem;
 
   protected abstract String getKillProcessCommand();
+
+  public abstract Vector<String> toVector();
 
   public ProcessInfo() {
   }
@@ -66,4 +70,5 @@ public abstract class ProcessInfo {
   public String toString() {
     return id + ", " + user + ", " + cpu + ", " + mem + ", " + status + ", " + name + ", ";
   }
+
 }
