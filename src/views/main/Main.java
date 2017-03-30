@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
+import models.os.OperatingSystem;
+import views.process.ProcessesPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -24,9 +28,9 @@ public class Main extends JPanel {
     super(new GridLayout(1, 1));
 
     JTabbedPane tabMenu = new JTabbedPane();
-
-    JComponent processPanel = makeTextPanel(PROCESSES_LABEL);
-    tabMenu.addTab(PROCESSES_LABEL, processPanel);
+    OperatingSystem os = new OperatingSystem();
+    ProcessesPanel pn = new ProcessesPanel(os.getProcessesManagement());
+    tabMenu.addTab(PROCESSES_LABEL, pn);
     tabMenu.setMnemonicAt(0, KeyEvent.VK_P);
 
     JComponent memoriesPanel = makeTextPanel(MEMORIES_LABEL);
