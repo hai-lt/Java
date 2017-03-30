@@ -44,7 +44,8 @@ public class ProcessesPanel extends JPanel {
     return new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // do something when press the Refresh button
+        tbProcesses.getProcessesManagement().loadProcesses();
+        tbProcesses.refreshData();
       }
     };
   }
