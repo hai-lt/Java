@@ -2,6 +2,7 @@ package models.processes;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Vector;
 
 /**
  * 
@@ -87,5 +88,13 @@ public abstract class ProcessesManagement {
       }
     }
     return result;
+  }
+
+  public Vector<Vector<String>> getProcessesVector() {
+    Vector<Vector<String>> data = new Vector<>();
+    for (ProcessInfo processInfo : getProcesses()) {
+      data.add(processInfo.toVector());
+    }
+    return data;
   }
 }
