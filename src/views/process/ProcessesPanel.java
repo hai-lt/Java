@@ -55,6 +55,14 @@ public class ProcessesPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         // do something when press the End Process button
+        int rowSelected = tbProcesses.getSelectedRow();
+        if (rowSelected > -1) {
+          long pid = Long.parseLong((String) tbProcesses.getValueAt(rowSelected, 0));
+          if (tbProcesses.getProcessesManagement().killProcessPid(pid) != null) {
+            tbProcesses.getProcessesManagement().loadProcesses();
+            tbProcesses.refreshData();
+          }
+        }
       }
     };
   }
