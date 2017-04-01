@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import models.os.OperatingSystem;
+import views.memories.MemoriesPanel;
 import views.process.ProcessesPanel;
 
 import java.awt.BorderLayout;
@@ -33,7 +34,7 @@ public class Main extends JPanel {
     tabMenu.addTab(PROCESSES_LABEL, pn);
     tabMenu.setMnemonicAt(0, KeyEvent.VK_P);
 
-    JComponent memoriesPanel = makeTextPanel(MEMORIES_LABEL);
+    JComponent memoriesPanel = new MemoriesPanel(os.getRootFilesManagement());
     tabMenu.addTab(MEMORIES_LABEL, memoriesPanel);
     tabMenu.setMnemonicAt(1, KeyEvent.VK_M);
 
