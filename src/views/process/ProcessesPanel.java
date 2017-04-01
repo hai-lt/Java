@@ -69,20 +69,24 @@ public class ProcessesPanel extends JPanel {
         // do something when press the End Process button
         int rowSelected = tbProcesses.getSelectedRow();
         if (rowSelected > -1) {
-          long pid = Long.parseLong((String) tbProcesses.getValueAt(rowSelected, 0));
-          ProcessInfo processKilled = tbProcesses.getProcessesManagement().killProcessPid(pid);
-          if (processKilled != null) {
-            tbProcesses.getProcessesManagement().loadProcesses();
-            tbProcesses.refreshData();
-            notifyMessage("Stopped a process which Pid is " + processKilled.getId());
-          } else {
-            notifyMessage("You are not allowed to stop this process", DANGER);
-          }
+          killProcess(rowSelected);
         } else {
           notifyMessage("Please select a process which you really want to stop!", WARNING);
         }
       }
     };
+  }
+
+  private void killProcess(int rowSelected) {
+    long pid = Long.parseLong((String) tbProcesses.getValueAt(rowSelected, 0));
+    ProcessInfo processKilled = tbProcesses.getProcessesManagement().killProcessPid(pid);
+    if (processKilled != null) {
+      tbProcesses.getProcessesManagement().loadProcesses();
+      tbProcesses.refreshData();
+      notifyMessage("Stopped a process which Pid is " + processKilled.getId());
+    } else {
+      notifyMessage("You are not allowed to stop this process", DANGER);
+    }
   }
 
   private void notifyMessage(String msg) {
