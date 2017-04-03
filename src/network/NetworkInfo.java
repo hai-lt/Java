@@ -5,13 +5,16 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.Random;
 
 public class NetworkInfo {
+  private static int MAX_PORT = 65536;
   private static final String WLAN_NAME = "wlan0";
   private static NetworkInfo instance;
+  private int port;
 
   private NetworkInfo() {
-
+    setPort();
   }
 
   public static NetworkInfo getInstance() {
@@ -50,5 +53,13 @@ public class NetworkInfo {
       return null;
     }
     return null;
+  }
+
+  private void setPort() {
+    port = Math.abs(new Random().nextInt()) % MAX_PORT;
+  }
+
+  public int getPort() {
+    return port;
   }
 }
