@@ -36,7 +36,6 @@ public class Server {
       return;
     }
     try {
-      int i = 0;
       isRunning = true;
       socket = new DatagramSocket(Server.getInstance().getPort(), NetworkManagement.getInstance().getLocalAddress());
       while (true) {
@@ -44,12 +43,9 @@ public class Server {
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
         socket.receive(incomingPacket);
 
-        solve(incomingPacket);
+        log(incomingPacket);
 
-        i++;
-        if (i == 2) {
-          close();
-        }
+        solve(incomingPacket);
       }
 
     } catch (SocketException e) {
@@ -76,20 +72,21 @@ public class Server {
     }
   }
 
+  private void log(DatagramPacket incoming) {
+    System.out.println("Requested: " + new String(incoming.getData()));
+  }
+
   private void solve(DatagramPacket incomingPacket) {
     new Thread(new Runnable() {
 
       @Override
       public void run() {
         try {
-          String message = new String(incomingPacket.getData());
-          System.out.println("Received message from client: " + message);
+          String response = Routes.solve(incomingPacket);
 
           InetAddress incomingAddress = incomingPacket.getAddress();
           int port = incomingPacket.getPort();
-          String reply = "Thank you for the message";
-          byte[] data = reply.getBytes();
-
+          byte[] data = response.getBytes();
           DatagramPacket replyPacket = new DatagramPacket(data, data.length, incomingAddress, port);
           socket.send(replyPacket);
         } catch (Exception e) {

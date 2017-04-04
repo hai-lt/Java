@@ -56,18 +56,14 @@ public class Client {
       e.printStackTrace();
     }
 
-    String responseMessage = new String(incomingPacket.getData());
-    System.out.println("Response from server:" + responseMessage);
-    return responseMessage;
+    return new String(incomingPacket.getData());
   }
 
   public static void main(String[] args) {
     Client client = new Client(NetworkManagement.getInstance().getLocalAddress(), Server.getInstance().getPort());
-    client.send("Hey, this is the first time");
-    Client client2 = new Client(NetworkManagement.getInstance().getLocalAddress(), Server.getInstance().getPort());
-    client2.send("And the second too");
+    System.out.println(client.send("Hey, this is the first time"));
+    System.out.println(client.send("demo"));
     client.close();
-    client2.close();
   }
 
   public int getMaxBytes() {
