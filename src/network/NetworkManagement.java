@@ -8,36 +8,36 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Random;
 
-public class NetworkInfo {
+public class NetworkManagement {
   private static int MAX_PORT = 65536;
   private static final String WLAN_NAME = "wlan0";
-  private static NetworkInfo instance;
+  private static NetworkManagement instance;
   private ArrayList<InetAddress> whiteListAddresses;
   private ArrayList<InetAddress> blackListAddresses;
   private int port;
 
-  private NetworkInfo() {
+  private NetworkManagement() {
     setPort();
     whiteListAddresses = new ArrayList<>();
     blackListAddresses = new ArrayList<>();
   }
 
-  public static NetworkInfo getInstance() {
+  public static NetworkManagement getInstance() {
     if (instance != null) {
       return instance;
     }
-    synchronized (NetworkInfo.class) {
+    synchronized (NetworkManagement.class) {
       if (instance != null) {
         return instance;
       } else {
-        instance = new NetworkInfo();
+        instance = new NetworkManagement();
         return instance;
       }
     }
   }
 
   public static void main(String args[]) throws SocketException {
-    System.out.println(NetworkInfo.getInstance().getLocalAddress().toString());
+    System.out.println(NetworkManagement.getInstance().getLocalAddress().toString());
   }
 
   public void addToWhiteList(InetAddress whiteAddress) {

@@ -62,9 +62,9 @@ public class Client {
   }
 
   public static void main(String[] args) {
-    Client client = new Client(NetworkInfo.getInstance().getLocalAddress(), Server.getInstance().getPort());
+    Client client = new Client(NetworkManagement.getInstance().getLocalAddress(), Server.getInstance().getPort());
     client.send("Hey, this is the first time");
-    Client client2 = new Client(NetworkInfo.getInstance().getLocalAddress(), Server.getInstance().getPort());
+    Client client2 = new Client(NetworkManagement.getInstance().getLocalAddress(), Server.getInstance().getPort());
     client2.send("And the second too");
     client.close();
     client2.close();

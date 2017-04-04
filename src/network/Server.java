@@ -38,7 +38,7 @@ public class Server {
     try {
       int i = 0;
       isRunning = true;
-      socket = new DatagramSocket(Server.getInstance().getPort(), NetworkInfo.getInstance().getLocalAddress());
+      socket = new DatagramSocket(Server.getInstance().getPort(), NetworkManagement.getInstance().getLocalAddress());
       while (true) {
         byte[] incomingData = new byte[MAX_RECEIVING_BYTES];
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
