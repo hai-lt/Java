@@ -7,16 +7,14 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 public class Server {
-  private static int MAX_RECEIVING_BYTES = 35000;
+  public final static int MAX_RECEIVING_BYTES = 35000;
   private static Server instance = null;
   private DatagramSocket socket;
   private int port;
-  private byte[] incomingData;
   private boolean isRunning;
 
   private Server() {
     port = 9876;
-    incomingData = new byte[MAX_RECEIVING_BYTES];
   }
 
   public static Server getInstance() {
@@ -42,10 +40,13 @@ public class Server {
       isRunning = true;
       socket = new DatagramSocket(Server.getInstance().getPort(), NetworkInfo.getInstance().getLocalAddress());
       while (true) {
+        byte[] incomingData = new byte[MAX_RECEIVING_BYTES];
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
         socket.receive(incomingPacket);
-        i++;
+
         solve(incomingPacket);
+
+        i++;
         if (i == 2) {
           close();
         }
@@ -56,6 +57,7 @@ public class Server {
     } catch (IOException i) {
       i.printStackTrace();
     }
+    isRunning = false;
   }
 
   public int getPort() {
