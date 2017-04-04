@@ -37,6 +37,7 @@ public class NetworkInfo {
 
   public InetAddress getLocalAddress() {
     try {
+      InetAddress localhost = InetAddress.getLocalHost();
       Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
       while (ifaces.hasMoreElements()) {
         NetworkInterface iface = ifaces.nextElement();
@@ -49,10 +50,10 @@ public class NetworkInfo {
           }
         }
       }
+      return localhost;
     } catch (Exception e) {
       return null;
     }
-    return null;
   }
 
   private void setPort() {
