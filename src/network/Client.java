@@ -5,53 +5,80 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class Client {
-  DatagramSocket Socket;
-  private byte[] incomingData;
+  private DatagramSocket socket;
+  private InetAddress ipAddress;
+  private int port;
 
-  public Client() {
-    incomingData = new byte[1024];
-  }
-
-  public void createAndListenSocket() {
+  public Client(InetAddress ipAddress, int port) {
+    this.ipAddress = ipAddress;
+    this.port = port;
     try {
-      Socket = new DatagramSocket();
-      // get ip address
-      InetAddress IPAddress = NetworkInfo.getInstance().getLocalAddress();
-
-      // create a string to send
-      String sentence = "This is a message from me, a client";
-      byte[] data = sentence.getBytes();
-
-      // send string to ip address with port is 9876
-      DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, Server.getInstance().getPort());
-      Socket.send(sendPacket);
-      System.out.println("Client: Sended");
-
-      // receive response data from server
-      DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
-      Socket.receive(incomingPacket);
-
-      // print data out
-      String response = new String(incomingPacket.getData());
-      System.out.println("Response from server:" + response);
-
-      // close socket
-      Socket.close();
-
-    } catch (UnknownHostException e) {
-      e.printStackTrace();
+      socket = new DatagramSocket();
     } catch (SocketException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+  public void close() {
+    if (socket == null || socket.isClosed()) {
+      return;
+    }
+    socket.close();
+  }
+
+  public InetAddress getIpAddress() {
+    return ipAddress;
+  }
+
+  public void setIpAddress(InetAddress ipAddress) {
+    this.ipAddress = ipAddress;
+  }
+
+  public String send(String message) {
+    byte[] data = message.getBytes();
+
+    // send string to ip address with port is 9876
+    DatagramPacket sendPacket = new DatagramPacket(data, data.length, getIpAddress(), getPort());
+    try {
+      socket.send(sendPacket);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // receive response data from server
+    byte[] incomingData = new byte[getMaxBytes()];
+    DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
+    try {
+      socket.receive(incomingPacket);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    String responseMessage = new String(incomingPacket.getData());
+    System.out.println("Response from server:" + responseMessage);
+    return responseMessage;
+  }
+
   public static void main(String[] args) {
-    Client client = new Client();
-    client.createAndListenSocket();
+    Client client = new Client(NetworkInfo.getInstance().getLocalAddress(), Server.getInstance().getPort());
+    client.send("Hey, this is the first time");
+    Client client2 = new Client(NetworkInfo.getInstance().getLocalAddress(), Server.getInstance().getPort());
+    client2.send("And the second too");
+    client.close();
+    client2.close();
+  }
+
+  public int getMaxBytes() {
+    return Server.MAX_RECEIVING_BYTES;
+  }
+
+  public int getPort() {
+    return port;
+  }
+
+  public void setPort(int port) {
+    this.port = port;
   }
 }
