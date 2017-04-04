@@ -1,5 +1,7 @@
 package models.processes;
 
+import java.util.Vector;
+
 public class WindowProcess extends ProcessInfo {
   public final static String[] TITLES = { "User", "Status", "Name", "Pid", "%Cpu", "Mem" };
   private static final int POSITION_USER = 0;
@@ -32,5 +34,17 @@ public class WindowProcess extends ProcessInfo {
 
   public WindowProcess(String user, String status, String name, long id, float cpu, float mem) {
     super(user, status, name, id, cpu, mem);
+  }
+
+  @Override
+  public Vector<String> toVector() {
+    Vector<String> value = new Vector<>();
+    value.add(getUser());
+    value.add(getStatus());
+    value.add(getName());
+    value.add(String.valueOf(getId()));
+    value.add(String.valueOf(getCpu()));
+    value.add(String.valueOf(getMem()));
+    return value;
   }
 }

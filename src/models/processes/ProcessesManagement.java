@@ -2,6 +2,7 @@ package models.processes;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Vector;
 
 /**
  * 
@@ -11,6 +12,7 @@ import java.util.Comparator;
 public abstract class ProcessesManagement {
   public static final int DESC = -1;
   public static final int ASC = 1;
+  public static final String ROOT_USER = "root";
   protected ArrayList<ProcessInfo> processes;
 
   public ProcessInfo find(long pid) {
@@ -69,7 +71,7 @@ public abstract class ProcessesManagement {
 
   public ProcessInfo killProcessPid(long pid) {
     ProcessInfo processInfo = find(pid);
-    if (processInfo != null) {
+    if (processInfo != null && !processInfo.getName().equals(ROOT_USER)) {
       return processInfo.kill();
     }
     return null;
@@ -87,5 +89,13 @@ public abstract class ProcessesManagement {
       }
     }
     return result;
+  }
+
+  public Vector<Vector<String>> getProcessesVector() {
+    Vector<Vector<String>> data = new Vector<>();
+    for (ProcessInfo processInfo : getProcesses()) {
+      data.add(processInfo.toVector());
+    }
+    return data;
   }
 }
