@@ -12,6 +12,10 @@ import javax.swing.JPanel;
 import network.Server;
 
 public class ServerManagementPanel extends JPanel {
+  private final static String STOP_SERVER_MESSAGE = "Server has stopped";
+  private final static String RUNNING_SERVER_MESSAGE = "Server is running";
+  private JLabel statusLb;
+
   public ServerManagementPanel() {
     super();
     setUi();
@@ -48,13 +52,34 @@ public class ServerManagementPanel extends JPanel {
 
     add(actionButtons);
 
+    JPanel statusPn = new JPanel();
+    statusPn.setBorder(BorderFactory.createTitledBorder("Status"));
+    statusLb = new JLabel(STOP_SERVER_MESSAGE);
+    statusPn.add(statusLb);
+    add(statusPn);
+
   }
 
   private void start() {
+    new Thread(new Runnable() {
 
+      @Override
+      public void run() {
+        Server.getInstance().run();
+      }
+    }).start();
+    ;
+    statusLb.setText(RUNNING_SERVER_MESSAGE);
   }
 
   private void close() {
+    new Thread(new Runnable() {
 
+      @Override
+      public void run() {
+        Server.getInstance().close();
+      }
+    }).start();
+    statusLb.setText(RUNNING_SERVER_MESSAGE);
   }
 }
