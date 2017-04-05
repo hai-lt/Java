@@ -37,7 +37,7 @@ public class Server {
     }
     try {
       isRunning = true;
-      socket = new DatagramSocket(Server.getInstance().getPort(), NetworkManagement.getInstance().getLocalAddress());
+      socket = new DatagramSocket(getPort(), getAdress());
       while (true) {
         byte[] incomingData = new byte[MAX_RECEIVING_BYTES];
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
@@ -58,6 +58,10 @@ public class Server {
 
   public int getPort() {
     return port;
+  }
+
+  public InetAddress getAdress() {
+    return NetworkManagement.getInstance().getLocalAddress();
   }
 
   public void close() {
@@ -100,4 +104,5 @@ public class Server {
     Server server = Server.getInstance();
     server.run();
   }
+
 }
