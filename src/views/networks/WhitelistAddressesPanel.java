@@ -2,14 +2,26 @@ package views.networks;
 
 import java.awt.Component;
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
+
 import views.base.ListView;
 
 public class WhitelistAddressesPanel extends ListView {
+  private static final String PANEL_NAME = "Whitelist Addresses";
+  private static final String EMPTY_MESSAGE = "Have no address";
   private ArrayList<RemoteOsPanel> oses;
 
   public WhitelistAddressesPanel(ArrayList<RemoteOsPanel> oses) {
     super(oses);
-    setTitle("Whitelist Addresses");
+    setTitle(PANEL_NAME);
+    setEmptyElementView(new JLabel(EMPTY_MESSAGE));
+  }
+
+  public WhitelistAddressesPanel(ArrayList<RemoteOsPanel> oses, int cols) {
+    super(oses, cols);
+    setTitle(PANEL_NAME);
+    setEmptyElementView(new JLabel(EMPTY_MESSAGE));
   }
 
   @Override

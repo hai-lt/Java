@@ -31,7 +31,7 @@ public class BlacklistAddressesPanel extends ListView {
   public Component getItem(int index) {
     JPanel container = new JPanel();
     container.add(new JLabel("- " + blacklist.get(index).toString()));
-    JButton del = new JButton("Del" + getCount());
+    JButton del = new JButton("Del");
     del.addActionListener(new ActionListener() {
 
       @Override
