@@ -80,6 +80,6 @@ public class ServerManagementPanel extends JPanel {
         Server.getInstance().close();
       }
     }).start();
-    statusLb.setText(RUNNING_SERVER_MESSAGE);
+    statusLb.setText(STOP_SERVER_MESSAGE);
   }
 }
