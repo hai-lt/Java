@@ -1,68 +1,49 @@
 package views.networks;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Component;
 import java.util.ArrayList;
+import views.base.ListView;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-
-public class WhitelistAddressesPanel extends JPanel {
-  private static final int DEFAULT_ROWS = 2;
+public class WhitelistAddressesPanel extends ListView {
   private ArrayList<RemoteOsPanel> oses;
-  private GridBagConstraints constraint;
-  private JPanel osContainer;
-  private int rows;
 
   public WhitelistAddressesPanel(ArrayList<RemoteOsPanel> oses) {
-    super(new BorderLayout());
-    rows = DEFAULT_ROWS;
-    this.oses = oses;
-    setBorder(BorderFactory.createTitledBorder("Whitelist Addresses"));
-    setConstraint();
-    setContainer();
-    add(osContainer, BorderLayout.NORTH);
+    super(oses);
+    setTitle("Whitelist Addresses");
   }
 
-  public void setContainer() {
-    if (osContainer != null) {
-      osContainer.removeAll();
-    }
-    osContainer = new JPanel(new GridBagLayout());
-    for (int i = 0; i < oses.size(); i++) {
-      osContainer.add(oses.get(i), getConstraint(i % rows, i / rows));
-    }
+  @Override
+  public void setData(Object object) {
+    oses = (ArrayList<RemoteOsPanel>) object;
   }
 
-  public void setConstraint() {
-    constraint = new GridBagConstraints();
-    constraint.fill = GridBagConstraints.HORIZONTAL;
-    constraint.weightx = 1;
+  @Override
+  public Component getItem(int index) {
+    return oses.get(index);
   }
 
-  public GridBagConstraints getConstraint() {
-    return constraint;
+  @Override
+  public void add(Object object) {
+    oses.add((RemoteOsPanel) object);
   }
 
-  public GridBagConstraints getConstraint(int gridx, int gridy) {
-    constraint.gridx = gridx;
-    constraint.gridy = gridy;
-    return constraint;
+  @Override
+  public void add(int index, Object object) {
+    oses.add(index, (RemoteOsPanel) object);
   }
 
-  public void addOs(RemoteOsPanel os) {
-    oses.add(os);
-    add(os, getConstraint(oses.size() % rows, oses.size() / rows));
+  @Override
+  public void removeData(int index) {
+    oses.remove(index);
   }
 
-  public void removeOs(int posx, int posy) {
-    oses.remove(posx * rows + posy);
-    refresh();
+  @Override
+  public void clearData() {
+    oses.clear();
   }
-  
-  public void refresh() {
-    setContainer();
-    add(osContainer);
+
+  @Override
+  public int getCount() {
+    return oses.size();
   }
 }
