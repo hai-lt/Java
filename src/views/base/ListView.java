@@ -67,9 +67,8 @@ public abstract class ListView extends JPanel {
 
   @Override
   public void remove(int index) {
-    super.remove(index);
     removeData(index);
-    setEmptyElementView();
+    notifyDataHasChanged();
   }
 
   @Override
