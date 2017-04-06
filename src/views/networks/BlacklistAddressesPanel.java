@@ -24,6 +24,7 @@ public class BlacklistAddressesPanel extends ListView {
   @Override
   public void setData(Object object) {
     blacklist = (ArrayList<InetAddress>) object;
+    blacklist = (ArrayList<InetAddress>) blacklist.clone();
   }
 
   @Override

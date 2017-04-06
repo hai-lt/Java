@@ -17,6 +17,7 @@ public class ConnectedAddressPanel extends ListView {
   public ConnectedAddressPanel(ArrayList<InetAddress> addresses) {
     super(addresses);
     setTitle("Connected");
+    setEmptyElementView(new JLabel("Have no remote connected"));
   }
 
   @Override
@@ -61,6 +62,7 @@ public class ConnectedAddressPanel extends ListView {
   @Override
   public void setData(Object object) {
     connectedAddresses = (ArrayList<InetAddress>) object;
+    connectedAddresses = (ArrayList<InetAddress>) connectedAddresses.clone();
   }
 
   private ActionListener closeButtonEvent(int index) {
@@ -68,7 +70,7 @@ public class ConnectedAddressPanel extends ListView {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println(index + "");
+        remove(index);
       }
     };
   }
