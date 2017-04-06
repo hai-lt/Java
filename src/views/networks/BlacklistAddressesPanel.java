@@ -1,65 +1,69 @@
 package views.networks;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class BlacklistAddressesPanel extends JPanel {
+import views.base.ListView;
+
+public class BlacklistAddressesPanel extends ListView {
   private static final String PANEL_NAME = "Blacklist Addresses";
   private ArrayList<InetAddress> blacklist;
 
   public BlacklistAddressesPanel(ArrayList<InetAddress> blacklist) {
-    super();
-    setBlacklist(blacklist);
-    setBorder(BorderFactory.createTitledBorder(PANEL_NAME));
-    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    setUi();
+    super(blacklist);
+    setTitle(PANEL_NAME);
+    setEmptyElementView(new JLabel("Has no black Address added"));
   }
 
-  public void refresh() {
-    removeAll();
-    setUi();
+  @Override
+  public void setData(Object object) {
+    blacklist = (ArrayList<InetAddress>) object;
   }
 
-  public void setUi() {
-    if (blacklist.size() == 0) {
-      add(new JLabel("Has no black Address added"));
-      return;
-    }
-    for (int i = 0; i < blacklist.size(); i++) {
-      JPanel container = new JPanel();
-      int num = i;
-      container.add(new JLabel("- " + blacklist.get(i).toString()));
-      JButton del = new JButton("Del");
-      del.addActionListener(new ActionListener() {
-        
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          removeInet(num);
-        }
-      });
-      container.add(del);
-      add(container);
-    }
+  @Override
+  public Component getItem(int index) {
+    JPanel container = new JPanel();
+    container.add(new JLabel("- " + blacklist.get(index).toString()));
+    JButton del = new JButton("Del" + getCount());
+    del.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        remove(index);
+      }
+    });
+    container.add(del);
+    return container;
   }
-  
-  public void removeInet(int index) {
+
+  @Override
+  public void add(Object object) {
+    blacklist.add((InetAddress) object);
+  }
+
+  @Override
+  public void add(int index, Object object) {
+    blacklist.add(index, (InetAddress) object);
+  }
+
+  @Override
+  public void removeData(int index) {
     blacklist.remove(index);
-    refresh();
   }
 
-  public ArrayList<InetAddress> getBlacklist() {
-    return blacklist;
+  @Override
+  public void clearData() {
+    blacklist.clear();
   }
 
-  public void setBlacklist(ArrayList<InetAddress> blacklist) {
-    this.blacklist = blacklist;
+  @Override
+  public int getCount() {
+    return blacklist.size();
   }
-
 }
