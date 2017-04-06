@@ -1,5 +1,6 @@
 package views.networks;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,14 +19,19 @@ public class ServerManagementPanel extends JPanel {
 
   public ServerManagementPanel() {
     super();
+    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     setUi();
   }
 
   private void setUi() {
     setBorder(BorderFactory.createTitledBorder("Your network"));
-    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    add(new JLabel("IP Address: " + Server.getInstance().getAdress()));
-    add(new JLabel("Port: " + Server.getInstance().getPort()));
+
+    JLabel lbIp = new JLabel("IP Address: " + Server.getInstance().getAdress());
+    lbIp.setAlignmentX(Component.CENTER_ALIGNMENT);
+    add(lbIp);
+    JLabel lbPort = new JLabel("Port : " + Server.getInstance().getPort());
+    lbPort.setAlignmentX(Component.CENTER_ALIGNMENT);
+    add(lbPort);
 
     JPanel actionButtons = new JPanel();
     JButton startBtn = new JButton("Start");
