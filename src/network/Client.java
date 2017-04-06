@@ -4,14 +4,20 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketException;
 
 public class Client {
+  private static final long DEFAULT_TIMEOUT = 3000;
+  private static final String TIMEOUT_MESSAGE = "Request timeout";
   private InetAddress ipAddress;
   private int port;
+  private long timeout;
 
   public Client(InetAddress ipAddress, int port) {
     this.ipAddress = ipAddress;
     this.port = port;
+    this.timeout = DEFAULT_TIMEOUT;
   }
 
   public InetAddress getIpAddress() {
@@ -35,11 +41,19 @@ public class Client {
       // receive response data from server
       byte[] incomingData = new byte[getMaxBytes()];
       DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
+
+      // generate a thread to catch timeout
+      Thread timeoutCatching = detectTimeout(socket);
+
       socket.receive(incomingPacket);
+      // if socket has already been responded, then thread will be stopped
+      timeoutCatching.stop();
       responseMessage = new String(incomingPacket.getData()).trim();
       socket.close();
+    } catch (SocketException e) {
+      responseMessage = TIMEOUT_MESSAGE;
     } catch (IOException e) {
-      e.printStackTrace();
+      responseMessage = e.getMessage();
     }
     return responseMessage;
   }
@@ -60,5 +74,31 @@ public class Client {
 
   public void setPort(int port) {
     this.port = port;
+  }
+
+  public long getTimeout() {
+    return timeout;
+  }
+
+  public void setTimeout(long timeout) {
+    this.timeout = timeout;
+  }
+
+  private Thread detectTimeout(DatagramSocket socket) {
+    Thread thread = new Thread(new Runnable() {
+
+      @Override
+      public void run() {
+        try {
+          Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+        }
+        if (!socket.isClosed()) {
+          socket.close();
+        }
+      }
+    });
+    thread.start();
+    return thread;
   }
 }
