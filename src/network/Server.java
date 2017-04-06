@@ -66,11 +66,6 @@ public class Server {
 
   public void close() {
     if (socket != null && !socket.isClosed()) {
-      try {
-        Thread.sleep(3000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
       socket.close();
       isRunning = false;
     }
