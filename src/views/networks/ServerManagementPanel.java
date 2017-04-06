@@ -11,10 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import network.Server;
+import views.AppResources;
 
 public class ServerManagementPanel extends JPanel {
   private final static String STOP_SERVER_MESSAGE = "Server has stopped";
   private final static String RUNNING_SERVER_MESSAGE = "Server is running";
+  private final static String HAS_NOT_STARTED_SERVER_MESSAGE = "Server has not started";
   private JLabel statusLb;
 
   public ServerManagementPanel() {
@@ -60,7 +62,8 @@ public class ServerManagementPanel extends JPanel {
 
     JPanel statusPn = new JPanel();
     statusPn.setBorder(BorderFactory.createTitledBorder("Status"));
-    statusLb = new JLabel(STOP_SERVER_MESSAGE);
+    statusLb = new JLabel();
+    setStatusServerNotStarted();
     statusPn.add(statusLb);
     add(statusPn);
 
@@ -75,7 +78,7 @@ public class ServerManagementPanel extends JPanel {
       }
     }).start();
     ;
-    statusLb.setText(RUNNING_SERVER_MESSAGE);
+    setStatusServerRunning();
   }
 
   private void close() {
@@ -86,6 +89,21 @@ public class ServerManagementPanel extends JPanel {
         Server.getInstance().close();
       }
     }).start();
+    setStatusServerStop();
+  }
+
+  private void setStatusServerStop() {
     statusLb.setText(STOP_SERVER_MESSAGE);
+    statusLb.setForeground(AppResources.COLOR_DANGER);
+  }
+
+  private void setStatusServerRunning() {
+    statusLb.setText(RUNNING_SERVER_MESSAGE);
+    statusLb.setForeground(AppResources.COLOR_SUCCESS);
+  }
+
+  private void setStatusServerNotStarted() {
+    statusLb.setText(HAS_NOT_STARTED_SERVER_MESSAGE);
+    statusLb.setForeground(AppResources.COLOR_WARNING);
   }
 }
