@@ -42,7 +42,6 @@ public abstract class ListView extends JPanel {
     } else {
       container = new JPanel(new GridBagLayout());
     }
-    setEmptyElementView();
     setUi();
   }
 
@@ -80,6 +79,7 @@ public abstract class ListView extends JPanel {
 
   public void setEmptyElementView(Component component) {
     emptyView = component;
+    notifyDataHasChanged();
   }
 
   private void setEmptyElementView() {
@@ -100,6 +100,7 @@ public abstract class ListView extends JPanel {
     for (int i = 0; i < getCount(); i++) {
       container.add(getItem(i), getConstraint(i % cols, i / cols));
     }
+    setEmptyElementView();
   };
 
   public abstract Component getItem(int index);
