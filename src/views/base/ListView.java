@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -98,10 +100,59 @@ public abstract class ListView extends JPanel {
 
   public void setUi() {
     for (int i = 0; i < getCount(); i++) {
-      container.add(getItem(i), getConstraint(i % cols, i / cols));
+      int index = i;
+      Component con = getItem(i);
+      container.add(con, getConstraint(i % cols, i / cols));
+      con.addMouseListener(new MouseListener() {
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+          onItemReleasedListener(index);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+          onItemPressedListener(index);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+          onItemExitListener(index);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          onItemEnteredListener(index);
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          onItemClickedListener(index);
+        }
+      });
     }
     setEmptyElementView();
   };
+
+  protected void onItemReleasedListener(int index) {
+
+  }
+
+  protected void onItemClickedListener(int index) {
+
+  }
+
+  protected void onItemEnteredListener(int index) {
+
+  }
+
+  protected void onItemPressedListener(int index) {
+
+  }
+
+  protected void onItemExitListener(int index) {
+
+  }
 
   public abstract Component getItem(int index);
 
