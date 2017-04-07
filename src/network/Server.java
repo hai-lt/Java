@@ -5,8 +5,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.Random;
 
 public class Server {
+  public final static int MAX_PORT = 65536;
   public final static int MAX_RECEIVING_BYTES = 35000;
   private static Server instance = null;
   private DatagramSocket socket;
@@ -14,7 +16,7 @@ public class Server {
   private boolean isRunning;
 
   private Server() {
-    port = 9876;
+    port = Math.abs((new Random().nextInt())) % MAX_PORT;
   }
 
   public static Server getInstance() {
