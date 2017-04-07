@@ -16,7 +16,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 
-public class Main extends JPanel {
+public class BaseOsView extends JPanel {
   private final static String NAME_TITLE = "System Management";
   private final static String PROCESSES_LABEL = "Processes";
   private final static String REMOTE_LABEL = "Access Remote";
@@ -24,7 +24,7 @@ public class Main extends JPanel {
   private JTabbedPane tabMenu;
   private OperatingSystem os;
 
-  public Main(OperatingSystem operatingSystem) {
+  public BaseOsView(OperatingSystem operatingSystem) {
     super(new GridLayout(1, 1));
 
     os = operatingSystem;
@@ -51,7 +51,7 @@ public class Main extends JPanel {
    * Create the GUI and show it. For thread safety, this method should be
    * invoked from the event dispatch thread.
    */
-  private static void createAndShowGUI(Main ui) {
+  private static void createAndShowGUI(BaseOsView ui) {
     // Create and set up the window.
     JFrame frame = new JFrame(ui.getTitle());
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,7 +72,7 @@ public class Main extends JPanel {
       public void run() {
         // Turn off metal's use of bold fonts
         UIManager.put("swing.boldMetal", Boolean.FALSE);
-        createAndShowGUI(new Main(new OperatingSystem()));
+        createAndShowGUI(new BaseOsView(new OperatingSystem()));
       }
     });
   }
