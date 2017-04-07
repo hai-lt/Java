@@ -2,7 +2,6 @@ package views.main;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;

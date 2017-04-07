@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class Client {
   private static final long DEFAULT_TIMEOUT = 3000;
@@ -59,9 +60,19 @@ public class Client {
   }
 
   public static void main(String[] args) {
-    Client client = new Client(NetworkManagement.getInstance().getLocalAddress(), Server.getInstance().getPort());
-    System.out.println(client.request("Hey, this is the first time"));
-    System.out.println(client.request("demo"));
+    if (args.length != 3) {
+      System.out.println("You need to pass the params in order: <Ip address> <port> <route>");
+      return;
+    };
+    Client client;
+    try {
+      client = new Client(InetAddress.getByName(args[0]), Integer.parseInt(args[1]));
+      System.out.println(client.request(args[2]));
+    } catch (NumberFormatException e) {
+      e.printStackTrace();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    }
   }
 
   public int getMaxBytes() {
