@@ -24,9 +24,6 @@ public class ConnectedAddressPanel extends ListView {
   public Component getItem(int index) {
     JPanel pn = new JPanel();
     pn.add(new JLabel(connectedAddresses.get(index).toString()));
-    JButton open = new JButton("Open");
-    open.addActionListener(openButtonEvent(index));
-    pn.add(open);
 
     JButton close = new JButton("Close");
     close.addActionListener(closeButtonEvent(index));
@@ -75,14 +72,9 @@ public class ConnectedAddressPanel extends ListView {
     };
   }
 
-  private ActionListener openButtonEvent(int index) {
-    return new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        System.out.println(index + "");
-      }
-    };
+  @Override
+  protected void onItemClickedListener(int index) {
+    super.onItemClickedListener(index);
+    System.out.println("Open item " + index);
   }
-
 }
