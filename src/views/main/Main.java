@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 
 import models.os.OperatingSystem;
 import views.memories.MemoriesPanel;
+import views.networks.NetworkPanel;
 import views.process.ProcessesPanel;
 
 import java.awt.BorderLayout;
@@ -38,7 +39,7 @@ public class Main extends JPanel {
     tabMenu.addTab(MEMORIES_LABEL, memoriesPanel);
     tabMenu.setMnemonicAt(1, KeyEvent.VK_M);
 
-    JComponent remotePanel = makeTextPanel(REMOTE_LABEL);
+    JComponent remotePanel = new NetworkPanel();
     tabMenu.addTab(REMOTE_LABEL, remotePanel);
     tabMenu.setMnemonicAt(2, KeyEvent.VK_A);
     remotePanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -46,15 +47,6 @@ public class Main extends JPanel {
     add(tabMenu);
 
     tabMenu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-  }
-
-  protected JComponent makeTextPanel(String text) {
-    JPanel panel = new JPanel(false);
-    JLabel filler = new JLabel(text);
-    filler.setHorizontalAlignment(JLabel.CENTER);
-    panel.setLayout(new GridLayout(1, 1));
-    panel.add(filler);
-    return panel;
   }
 
   /**
