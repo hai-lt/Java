@@ -44,4 +44,12 @@ public class WindowProcesses extends ProcessesManagement {
   public String[] getTitles() {
     return WindowProcess.TITLES;
   }
+
+  public static WindowProcesses convertFrom(String string) {
+    ArrayList<ProcessInfo> processes = new ArrayList<>();
+    for (String process : string.split("; ")) {
+      processes.add(new WindowProcess(process));
+    }
+    return new WindowProcesses(processes);
+  }
 }

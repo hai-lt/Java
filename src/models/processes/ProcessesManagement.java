@@ -98,4 +98,13 @@ public abstract class ProcessesManagement {
     }
     return data;
   }
+
+  @Override
+  public String toString() {
+    String string = "";
+    for (ProcessInfo processInfo : processes) {
+      string = string.concat(processInfo.toString()).concat("; ");
+    }
+    return string;
+  }
 }

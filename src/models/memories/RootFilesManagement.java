@@ -7,6 +7,10 @@ public class RootFilesManagement {
   private File[] roots;
   private ArrayList<Memory> memories;
 
+  public RootFilesManagement(ArrayList<Memory> memories) {
+    this.memories = memories;
+  }
+
   public RootFilesManagement(File[] roots) {
     memories = new ArrayList<>();
     setRoots(roots);
@@ -15,10 +19,6 @@ public class RootFilesManagement {
   public RootFilesManagement() {
     memories = new ArrayList<>();
     setRoots(File.listRoots());
-  }
-
-  public File[] getRoots() {
-    return roots;
   }
 
   public void setRoots(File[] roots) {
@@ -31,5 +31,23 @@ public class RootFilesManagement {
 
   public ArrayList<Memory> getMemories() {
     return memories;
+  }
+
+  @Override
+  public String toString() {
+    String string = "";
+    for (Memory memory : memories) {
+      string += memory.toString() + "; ";
+    }
+    return string;
+  }
+
+  public static RootFilesManagement convertFrom(String string) {
+    String[] memoriesString = string.split("; ");
+    ArrayList<Memory> memories = new ArrayList<>();
+    for (String memory : memoriesString) {
+      memories.add(Memory.convertFrom(memory));
+    }
+    return new RootFilesManagement(memories);
   }
 }

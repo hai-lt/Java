@@ -22,7 +22,7 @@ public class UnixProcesses extends ProcessesManagement {
       BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
       String line;
       processes.clear();
-//      remove the first line which is the titles of the processes
+      // remove the first line which is the titles of the processes
       input.readLine();
       while ((line = input.readLine()) != null) {
         processes.add(new UnixProcess(breeze(line)));
@@ -38,6 +38,15 @@ public class UnixProcesses extends ProcessesManagement {
   @Override
   public String[] getTitles() {
     return UnixProcess.TITLES;
+  }
+
+  public static UnixProcesses convertFrom(String string) {
+    String[] values = string.split("; ");
+    ArrayList<ProcessInfo> processes = new ArrayList<>();
+    for (String process : values) {
+      processes.add(UnixProcess.convertFrom(process));
+    }
+    return new UnixProcesses(processes);
   }
 
 }
