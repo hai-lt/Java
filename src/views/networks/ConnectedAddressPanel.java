@@ -9,7 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import models.os.OperatingSystem;
 import views.base.ListView;
+import views.main.RemoteOsManagementView;
 
 public class ConnectedAddressPanel extends ListView {
   private ArrayList<InetAddress> connectedAddresses;
@@ -75,6 +77,6 @@ public class ConnectedAddressPanel extends ListView {
   @Override
   protected void onItemClickedListener(int index) {
     super.onItemClickedListener(index);
-    System.out.println("Open item " + index);
+    new RemoteOsManagementView(new OperatingSystem().toString()).create();
   }
 }
