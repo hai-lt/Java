@@ -5,8 +5,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.Random;
 
 public class Server {
+  public final static int MAX_PORT = 65536;
   public final static int MAX_RECEIVING_BYTES = 35000;
   private static Server instance = null;
   private DatagramSocket socket;
@@ -14,7 +16,7 @@ public class Server {
   private boolean isRunning;
 
   private Server() {
-    port = 9876;
+    port = Math.abs((new Random().nextInt())) % MAX_PORT;
   }
 
   public static Server getInstance() {
@@ -37,7 +39,7 @@ public class Server {
     }
     try {
       isRunning = true;
-      socket = new DatagramSocket(Server.getInstance().getPort(), NetworkManagement.getInstance().getLocalAddress());
+      socket = new DatagramSocket(getPort(), getAdress());
       while (true) {
         byte[] incomingData = new byte[MAX_RECEIVING_BYTES];
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
@@ -60,13 +62,12 @@ public class Server {
     return port;
   }
 
+  public InetAddress getAdress() {
+    return NetworkManagement.getInstance().getLocalAddress();
+  }
+
   public void close() {
     if (socket != null && !socket.isClosed()) {
-      try {
-        Thread.sleep(3000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
       socket.close();
       isRunning = false;
     }
@@ -100,4 +101,5 @@ public class Server {
     Server server = Server.getInstance();
     server.run();
   }
+
 }

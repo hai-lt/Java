@@ -68,7 +68,17 @@ public abstract class ProcessInfo {
 
   @Override
   public String toString() {
-    return id + ", " + user + ", " + cpu + ", " + mem + ", " + status + ", " + name + ", ";
+    return id + ", " + user + ", " + cpu + ", " + mem + ", " + status + ", " + name;
+  }
+
+  public void setAttributes(String string) {
+    String[] values = string.split(", ");
+    id = Long.parseLong(values[0]);
+    user = values[1];
+    cpu = Float.parseFloat(values[2]);
+    mem = Float.parseFloat(values[3]);
+    status = values[4];
+    name = values[5];
   }
 
 }

@@ -49,4 +49,9 @@ public class UnixProcess extends ProcessInfo {
     return value;
   }
 
+  public static UnixProcess convertFrom(String string) {
+    UnixProcess process = new UnixProcess();
+    process.setAttributes(string);
+    return process;
+  }
 }

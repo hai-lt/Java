@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import models.processes.ProcessInfo;
 import models.processes.ProcessesManagement;
+import views.AppResources;
 
 public class ProcessesPanel extends JPanel {
   private final static int NOTIFICATION_DEFAULT_TIME = 2000;
@@ -116,12 +117,12 @@ public class ProcessesPanel extends JPanel {
   private Color getColor(int type) {
     switch (type) {
     case WARNING:
-      return Color.ORANGE;
+      return AppResources.COLOR_WARNING;
     case DANGER:
-      return Color.RED;
+      return AppResources.COLOR_DANGER;
 
     default:
-      return Color.BLUE;
+      return AppResources.COLOR_SUCCESS;
     }
   }
 

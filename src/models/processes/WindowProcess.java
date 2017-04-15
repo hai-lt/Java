@@ -47,4 +47,10 @@ public class WindowProcess extends ProcessInfo {
     value.add(String.valueOf(getMem()));
     return value;
   }
+
+  public static WindowProcess convertFrom(String string) {
+    WindowProcess windowProcess = new WindowProcess();
+    windowProcess.setAttributes(string);
+    return windowProcess;
+  }
 }
