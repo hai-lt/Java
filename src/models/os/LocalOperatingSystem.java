@@ -6,13 +6,13 @@ import models.processes.UnixProcesses;
 import models.processes.WindowProcesses;
 
 public class LocalOperatingSystem extends OperatingSystem {
-  private LocalOperatingSystem instance;
+  private static LocalOperatingSystem instance;
 
   private LocalOperatingSystem() {
     super();
   }
 
-  public LocalOperatingSystem getInstance() {
+  public static LocalOperatingSystem getInstance() {
     if (instance != null) {
       return instance;
     }
