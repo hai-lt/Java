@@ -3,6 +3,7 @@ package network;
 import java.net.DatagramPacket;
 
 import controllers.DemoController;
+import controllers.MemoriesController;
 import controllers.ProcessesController;
 
 public class Routes {
@@ -15,6 +16,9 @@ public class Routes {
     }
     if (receiveMessage.indexOf(ProcessesController.RESOURCES) == 0) {
       return new ProcessesController(receiveMessage).solve();
+    }
+    if (receiveMessage.indexOf(MemoriesController.RESOURCES) == 0) {
+      return new MemoriesController(receiveMessage).solve();
     }
     return ROUTE_NOT_MATCH;
   }
