@@ -10,8 +10,7 @@ public class Routes {
 
   public static String solve(DatagramPacket receive) {
     String receiveMessage = new String(receive.getData()).trim();
-    switch (receiveMessage) {
-    case "demo":
+    if (receiveMessage.equals("/demo")) {
       return DemoController.demo();
     }
     if (receiveMessage.indexOf(ProcessesController.RESOURCES) == 0) {
