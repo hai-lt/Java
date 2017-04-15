@@ -16,7 +16,7 @@ public class LocalOperatingSystem extends OperatingSystem {
     if (instance != null) {
       return instance;
     }
-    synchronized (instance) {
+    synchronized (LocalOperatingSystem.class) {
       if (instance != null) {
         return instance;
       }
