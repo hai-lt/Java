@@ -12,6 +12,8 @@ import views.process.ProcessesPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public abstract class BaseOsView extends JPanel {
@@ -20,6 +22,7 @@ public abstract class BaseOsView extends JPanel {
   private final static String MEMORIES_LABEL = "Memories";
   private JTabbedPane tabMenu;
   private OperatingSystem os;
+  private ProcessesPanel processesPanel;
 
   public BaseOsView(OperatingSystem operatingSystem) {
     super(new GridLayout(1, 1));
@@ -28,8 +31,21 @@ public abstract class BaseOsView extends JPanel {
     tabMenu = new JTabbedPane();
     tabMenu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
     add(tabMenu);
+    processesPanel = new ProcessesPanel(os.getProcessesManagement()) {
 
-    addTab(new ProcessesPanel(os.getProcessesManagement()), PROCESSES_LABEL, KeyEvent.VK_P);
+      @Override
+      public ActionListener refreshProcesses() {
+        return new ActionListener() {
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            refreshProcessesAction();
+          }
+        };
+      }
+    };
+
+    addTab(processesPanel, PROCESSES_LABEL, KeyEvent.VK_P);
     addTab(new MemoriesPanel(os.getRootFilesManagement()), MEMORIES_LABEL, KeyEvent.VK_M);
 
   }
@@ -67,5 +83,11 @@ public abstract class BaseOsView extends JPanel {
     return frame;
   }
 
+  public ProcessesPanel getProcessesPanel() {
+    return processesPanel;
+  }
+
   public abstract JFrame create();
+
+  public abstract void refreshProcessesAction();
 }
