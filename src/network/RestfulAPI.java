@@ -51,8 +51,37 @@ public abstract class RestfulAPI {
   public String failed() {
     return FAILED_MESSAGE;
   }
-  
+
   public String getRequest() {
     return request;
+  }
+
+  public static String formatGet(String resource, long id) {
+    return resource + "/" + id;
+  }
+
+  public static String formatGet(String... path) {
+    String resource = path[0];
+    String params = "";
+    for (int i = 1; i < path.length; i++) {
+      params += path[i] + "&";
+    }
+    if (!params.equals("")) {
+      params.substring(0, params.length() - 2);
+      resource += "?" + params;
+    }
+    return resource;
+  }
+
+  public static String formatPut(String resource, long id) {
+    return resource + PUT_METHOD + "/" + id;
+  }
+
+  public static String formatDelete(String resource, long id) {
+    return resource + DELETE_METHOD + "/" + id;
+  }
+
+  public static String formatPost(String resource) {
+    return resource + POST_METHOD;
   }
 }
