@@ -6,12 +6,15 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import models.os.OperatingSystem;
+import models.processes.ProcessesManagement;
 import views.memories.MemoriesPanel;
 import views.process.ProcessesPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public abstract class BaseOsView extends JPanel {
@@ -20,6 +23,7 @@ public abstract class BaseOsView extends JPanel {
   private final static String MEMORIES_LABEL = "Memories";
   private JTabbedPane tabMenu;
   private OperatingSystem os;
+  private ProcessesPanel processesPanel;
 
   public BaseOsView(OperatingSystem operatingSystem) {
     super(new GridLayout(1, 1));
@@ -28,8 +32,21 @@ public abstract class BaseOsView extends JPanel {
     tabMenu = new JTabbedPane();
     tabMenu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
     add(tabMenu);
+    processesPanel = new ProcessesPanel(os.getProcessesManagement()) {
 
-    addTab(new ProcessesPanel(os.getProcessesManagement()), PROCESSES_LABEL, KeyEvent.VK_P);
+      @Override
+      public void refreshProcesses() {
+        refreshProcessesAction();
+      }
+
+      @Override
+      public boolean kill(long pid) {
+        return killProcess(pid);
+      }
+
+    };
+
+    addTab(processesPanel, PROCESSES_LABEL, KeyEvent.VK_P);
     addTab(new MemoriesPanel(os.getRootFilesManagement()), MEMORIES_LABEL, KeyEvent.VK_M);
 
   }
@@ -55,7 +72,7 @@ public abstract class BaseOsView extends JPanel {
   public static JFrame createUi(BaseOsView ui) {
     // Create and set up the window.
     JFrame frame = new JFrame(ui.getTitle());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     // Add content to the window.
     frame.add(ui, BorderLayout.CENTER);
@@ -67,5 +84,22 @@ public abstract class BaseOsView extends JPanel {
     return frame;
   }
 
+  public ProcessesPanel getProcessesPanel() {
+    return processesPanel;
+  }
+
+  public void setProcesses(ProcessesManagement processes) {
+    os.setProcessesManagement(processes);
+    processesPanel.setProcessesManagement(processes);
+  }
+
+  public void notifyProcessesChanged() {
+    processesPanel.notifyProcessesChanged();
+  }
+
   public abstract JFrame create();
+
+  public abstract void refreshProcessesAction();
+
+  public abstract boolean killProcess(long pid);
 }

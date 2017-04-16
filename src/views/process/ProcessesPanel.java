@@ -13,7 +13,7 @@ import models.processes.ProcessInfo;
 import models.processes.ProcessesManagement;
 import views.AppResources;
 
-public class ProcessesPanel extends JPanel {
+public abstract class ProcessesPanel extends JPanel {
   private final static int NOTIFICATION_DEFAULT_TIME = 2000;
   private final static int WARNING = 0;
   private final static int SUCCESS = 1;
@@ -40,7 +40,7 @@ public class ProcessesPanel extends JPanel {
     JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     setAlignmentX(RIGHT_ALIGNMENT);
     btnRefresh = new JButton("Refresh");
-    btnRefresh.addActionListener(refreshProcesses());
+    btnRefresh.addActionListener(refreshProcessesListener());
     buttons.add(btnRefresh);
     btnKillProcess = new JButton("End Process");
     btnKillProcess.addActionListener(killProcessListener());
@@ -53,12 +53,12 @@ public class ProcessesPanel extends JPanel {
     add(notificationLabel, BorderLayout.SOUTH);
   }
 
-  private ActionListener refreshProcesses() {
+  public ActionListener refreshProcessesListener() {
     return new ActionListener() {
+
       @Override
       public void actionPerformed(ActionEvent e) {
-        tbProcesses.getProcessesManagement().loadProcesses();
-        tbProcesses.refreshData();
+        refreshProcesses();
       }
     };
   }
@@ -70,7 +70,14 @@ public class ProcessesPanel extends JPanel {
         // do something when press the End Process button
         int rowSelected = tbProcesses.getSelectedRow();
         if (rowSelected > -1) {
-          killProcess(rowSelected);
+          long pid = Long.parseLong((String) tbProcesses.getValueAt(rowSelected, 0));
+          if (kill(pid)) {
+            tbProcesses.getProcessesManagement().loadProcesses();
+            tbProcesses.refreshData();
+            notifyMessage("Stopped a process which Pid is " + pid);
+          } else {
+            notifyMessage("You are not allowed to stop this process", DANGER);
+          }
         } else {
           notifyMessage("Please select a process which you really want to stop!", WARNING);
         }
@@ -78,17 +85,9 @@ public class ProcessesPanel extends JPanel {
     };
   }
 
-  private void killProcess(int rowSelected) {
-    long pid = Long.parseLong((String) tbProcesses.getValueAt(rowSelected, 0));
-    ProcessInfo processKilled = tbProcesses.getProcessesManagement().killProcessPid(pid);
-    if (processKilled != null) {
-      tbProcesses.getProcessesManagement().loadProcesses();
-      tbProcesses.refreshData();
-      notifyMessage("Stopped a process which Pid is " + processKilled.getId());
-    } else {
-      notifyMessage("You are not allowed to stop this process", DANGER);
-    }
-  }
+  public abstract boolean kill(long pid);
+
+  public abstract void refreshProcesses();
 
   private void notifyMessage(String msg) {
     notifyMessage(msg, SUCCESS);
@@ -112,6 +111,23 @@ public class ProcessesPanel extends JPanel {
         ;
       }
     }).start();
+  }
+
+  public ProcessTable getProcessTable() {
+    return tbProcesses;
+  }
+
+  public ProcessesManagement getProcessesManagement() {
+    return processesManagement;
+  }
+
+  public void setProcessesManagement(ProcessesManagement processesManagement) {
+    this.processesManagement = processesManagement;
+  }
+
+  public void notifyProcessesChanged() {
+    tbProcesses.setProcessesManagement(processesManagement);
+    tbProcesses.refreshData();
   }
 
   private Color getColor(int type) {

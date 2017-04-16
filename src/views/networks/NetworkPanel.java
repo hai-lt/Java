@@ -8,6 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import models.os.OperatingSystem;
+import network.Client;
+import network.Server;
 
 public class NetworkPanel extends JPanel {
   private WhitelistAddressesPanel whitelistAddressesPanel;
@@ -23,6 +25,7 @@ public class NetworkPanel extends JPanel {
 
     ArrayList<InetAddress> addresses = getAddresses();
     ArrayList<RemoteOsPanel> remoteOsPanels = getRemoteOsPanels();
+    ArrayList<Client> connected = getConnectedClient();
 
     JPanel serverPanel = new JPanel(new BorderLayout());
     serverPanel.setBorder(BorderFactory.createTitledBorder("Server Management"));
@@ -36,7 +39,7 @@ public class NetworkPanel extends JPanel {
     JPanel remotePanel = new JPanel(new BorderLayout());
     remotePanel.setBorder(BorderFactory.createTitledBorder("Remote Management"));
     remotePanel.add(new RemoteConnectionPanel(), BorderLayout.WEST);
-    connectedAddressPanel = new ConnectedAddressPanel(addresses);
+    connectedAddressPanel = new ConnectedAddressPanel(connected);
     remotePanel.add(connectedAddressPanel, BorderLayout.EAST);
     container.add(remotePanel, BorderLayout.SOUTH);
   }
@@ -52,7 +55,7 @@ public class NetworkPanel extends JPanel {
     }
     return blacklist;
   }
-  
+
   private ArrayList<RemoteOsPanel> getRemoteOsPanels() {
     ArrayList<RemoteOsPanel> remoteOsPanels = new ArrayList<>();
     try {
@@ -63,5 +66,13 @@ public class NetworkPanel extends JPanel {
       e.printStackTrace();
     }
     return remoteOsPanels;
+  }
+
+  private ArrayList<Client> getConnectedClient() {
+    ArrayList<Client> connected = new ArrayList<>();
+    for (int i = 0; i < 3; i++) {
+      connected.add(new Client(Server.getInstance().getAdress(), Server.getInstance().getPort()));
+    }
+    return connected;
   }
 }

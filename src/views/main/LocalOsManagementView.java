@@ -28,4 +28,16 @@ public class LocalOsManagementView extends BaseOsView {
     BaseOsView.turnOffBoldFont();
     new LocalOsManagementView().create();
   }
+
+  @Override
+  public void refreshProcessesAction() {
+    getProcessesPanel().getProcessTable().getProcessesManagement().loadProcesses();
+    getProcessesPanel().getProcessTable().refreshData();
+  }
+
+  @Override
+  public boolean killProcess(long pid) {
+    return getProcessesPanel().getProcessesManagement().killProcessPid(pid) != null;
+  }
+
 }
