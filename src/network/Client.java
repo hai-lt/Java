@@ -63,7 +63,8 @@ public class Client {
     if (args.length != 3) {
       System.out.println("You need to pass the params in order: <Ip address> <port> <route>");
       return;
-    };
+    }
+    ;
     Client client;
     try {
       client = new Client(InetAddress.getByName(args[0]), Integer.parseInt(args[1]));
@@ -111,5 +112,10 @@ public class Client {
     });
     thread.start();
     return thread;
+  }
+
+  @Override
+  public String toString() {
+    return getIpAddress() + ":" + getPort();
   }
 }
