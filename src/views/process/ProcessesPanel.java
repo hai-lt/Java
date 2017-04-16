@@ -40,7 +40,7 @@ public abstract class ProcessesPanel extends JPanel {
     JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     setAlignmentX(RIGHT_ALIGNMENT);
     btnRefresh = new JButton("Refresh");
-    btnRefresh.addActionListener(refreshProcesses());
+    btnRefresh.addActionListener(refreshProcessesListener());
     buttons.add(btnRefresh);
     btnKillProcess = new JButton("End Process");
     btnKillProcess.addActionListener(killProcessListener());
@@ -53,7 +53,15 @@ public abstract class ProcessesPanel extends JPanel {
     add(notificationLabel, BorderLayout.SOUTH);
   }
 
-  public abstract ActionListener refreshProcesses();
+  public ActionListener refreshProcessesListener() {
+    return new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        refreshProcesses();
+      }
+    };
+  }
 
   private ActionListener killProcessListener() {
     return new ActionListener() {
@@ -78,6 +86,8 @@ public abstract class ProcessesPanel extends JPanel {
   }
 
   public abstract boolean kill(long pid);
+
+  public abstract void refreshProcesses();
 
   private void notifyMessage(String msg) {
     notifyMessage(msg, SUCCESS);

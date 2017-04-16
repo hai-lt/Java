@@ -35,14 +35,8 @@ public abstract class BaseOsView extends JPanel {
     processesPanel = new ProcessesPanel(os.getProcessesManagement()) {
 
       @Override
-      public ActionListener refreshProcesses() {
-        return new ActionListener() {
-
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            refreshProcessesAction();
-          }
-        };
+      public void refreshProcesses() {
+        refreshProcessesAction();
       }
 
       @Override
@@ -106,5 +100,6 @@ public abstract class BaseOsView extends JPanel {
   public abstract JFrame create();
 
   public abstract void refreshProcessesAction();
+
   public abstract boolean killProcess(long pid);
 }
