@@ -7,28 +7,30 @@ import models.processes.ProcessesManagement;
 import models.processes.UnixProcesses;
 import models.processes.WindowProcesses;
 import network.Client;
+import network.RestfulRequest;
 
 public class RemoteOsManagementView extends BaseOsView {
-  private Client client;
+  private RestfulRequest request;
 
   public RemoteOsManagementView(OperatingSystem operatingSystem, Client client) {
     super(operatingSystem);
-    this.client = client;
+    this.request = (RestfulRequest) client;
+    this.request = new RestfulRequest(client.getIpAddress(), client.getPort());
   }
 
   public RemoteOsManagementView(String osString, Client client) {
     super(OperatingSystem.convertFrom(osString));
-    this.client = client;
+    this.request = (RestfulRequest) client;
   }
 
   @Override
   public JFrame create() {
-    return createUi(new RemoteOsManagementView(getOperatingSystem(), client));
+    return createUi(new RemoteOsManagementView(getOperatingSystem(), request));
   }
 
   @Override
   public void refreshProcessesAction() {
-    String response = client.request("/processes");
+    String response = request.request("/processes");
     ProcessesManagement processes;
     if (getOperatingSystem().isWindowsOs()) {
       processes = WindowProcesses.convertFrom(response);
