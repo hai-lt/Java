@@ -105,9 +105,22 @@ public abstract class ProcessesPanel extends JPanel {
       }
     }).start();
   }
-  
+
   public ProcessTable getProcessTable() {
     return tbProcesses;
+  }
+
+  public ProcessesManagement getProcessesManagement() {
+    return processesManagement;
+  }
+
+  public void setProcessesManagement(ProcessesManagement processesManagement) {
+    this.processesManagement = processesManagement;
+  }
+
+  public void notifyProcessesChanged() {
+    tbProcesses.setProcessesManagement(processesManagement);
+    tbProcesses.refreshData();
   }
 
   private Color getColor(int type) {
