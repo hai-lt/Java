@@ -2,6 +2,7 @@ package views.main;
 
 import javax.swing.JFrame;
 
+import controllers.ProcessesController;
 import models.os.OperatingSystem;
 import models.processes.ProcessesManagement;
 import models.processes.UnixProcesses;
@@ -20,7 +21,7 @@ public class RemoteOsManagementView extends BaseOsView {
 
   public RemoteOsManagementView(String osString, Client client) {
     super(OperatingSystem.convertFrom(osString));
-    this.request = (RestfulRequest) client;
+    this.request = new RestfulRequest(client.getIpAddress(), client.getPort());
   }
 
   @Override
@@ -30,7 +31,7 @@ public class RemoteOsManagementView extends BaseOsView {
 
   @Override
   public void refreshProcessesAction() {
-    String response = request.request("/processes");
+    String response = request.request(ProcessesController.RESOURCES);
     ProcessesManagement processes;
     if (getOperatingSystem().isWindowsOs()) {
       processes = WindowProcesses.convertFrom(response);
@@ -43,7 +44,6 @@ public class RemoteOsManagementView extends BaseOsView {
 
   @Override
   public boolean killProcess(long pid) {
-    System.out.println("kill process: " + pid);
-    return true;
+    return request.delete(ProcessesController.RESOURCES, pid) != null;
   }
 }

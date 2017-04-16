@@ -41,7 +41,6 @@ public abstract class RestfulAPI {
     if (getResources().length() == request.indexOf(POST_METHOD)) {
       return create();
     }
-    System.out.println("routes44 : " + request.indexOf(getResources() + "/"));
     if (0 == request.indexOf(getResources() + "/")) {
       return show();
     }
