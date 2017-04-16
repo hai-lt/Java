@@ -13,7 +13,7 @@ import models.processes.ProcessInfo;
 import models.processes.ProcessesManagement;
 import views.AppResources;
 
-public class ProcessesPanel extends JPanel {
+public abstract class ProcessesPanel extends JPanel {
   private final static int NOTIFICATION_DEFAULT_TIME = 2000;
   private final static int WARNING = 0;
   private final static int SUCCESS = 1;
@@ -53,15 +53,7 @@ public class ProcessesPanel extends JPanel {
     add(notificationLabel, BorderLayout.SOUTH);
   }
 
-  private ActionListener refreshProcesses() {
-    return new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        tbProcesses.getProcessesManagement().loadProcesses();
-        tbProcesses.refreshData();
-      }
-    };
-  }
+  public abstract ActionListener refreshProcesses();
 
   private ActionListener killProcessListener() {
     return new ActionListener() {
@@ -112,6 +104,10 @@ public class ProcessesPanel extends JPanel {
         ;
       }
     }).start();
+  }
+  
+  public ProcessTable getProcessTable() {
+    return tbProcesses;
   }
 
   private Color getColor(int type) {
