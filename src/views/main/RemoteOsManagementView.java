@@ -38,4 +38,10 @@ public class RemoteOsManagementView extends BaseOsView {
     setProcesses(processes);
     notifyProcessesChanged();
   }
+
+  @Override
+  public boolean killProcess(long pid) {
+    System.out.println("kill process: " + pid);
+    return true;
+  }
 }

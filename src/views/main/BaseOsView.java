@@ -44,6 +44,12 @@ public abstract class BaseOsView extends JPanel {
           }
         };
       }
+
+      @Override
+      public boolean kill(long pid) {
+        return killProcess(pid);
+      }
+
     };
 
     addTab(processesPanel, PROCESSES_LABEL, KeyEvent.VK_P);
@@ -100,4 +106,5 @@ public abstract class BaseOsView extends JPanel {
   public abstract JFrame create();
 
   public abstract void refreshProcessesAction();
+  public abstract boolean killProcess(long pid);
 }

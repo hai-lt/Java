@@ -1,7 +1,5 @@
 package views.main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
@@ -36,4 +34,10 @@ public class LocalOsManagementView extends BaseOsView {
     getProcessesPanel().getProcessTable().getProcessesManagement().loadProcesses();
     getProcessesPanel().getProcessTable().refreshData();
   }
+
+  @Override
+  public boolean killProcess(long pid) {
+    return getProcessesPanel().getProcessesManagement().killProcessPid(pid) != null;
+  }
+
 }
