@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import models.os.OperatingSystem;
+import models.processes.ProcessesManagement;
 import views.memories.MemoriesPanel;
 import views.process.ProcessesPanel;
 
@@ -85,6 +86,15 @@ public abstract class BaseOsView extends JPanel {
 
   public ProcessesPanel getProcessesPanel() {
     return processesPanel;
+  }
+
+  public void setProcesses(ProcessesManagement processes) {
+    os.setProcessesManagement(processes);
+    processesPanel.setProcessesManagement(processes);
+  }
+
+  public void notifyProcessesChanged() {
+    processesPanel.notifyProcessesChanged();
   }
 
   public abstract JFrame create();
