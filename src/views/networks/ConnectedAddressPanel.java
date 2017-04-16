@@ -3,20 +3,20 @@ package views.networks;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import models.os.OperatingSystem;
+import network.Client;
 import views.base.ListView;
 import views.main.RemoteOsManagementView;
 
 public class ConnectedAddressPanel extends ListView {
-  private ArrayList<InetAddress> connectedAddresses;
+  private ArrayList<Client> connectedAddresses;
 
-  public ConnectedAddressPanel(ArrayList<InetAddress> addresses) {
+  public ConnectedAddressPanel(ArrayList<Client> addresses) {
     super(addresses);
     setTitle("Connected");
     setEmptyElementView(new JLabel("Have no remote connected"));
@@ -40,12 +40,12 @@ public class ConnectedAddressPanel extends ListView {
 
   @Override
   public void add(int position, Object object) {
-    connectedAddresses.add(position, (InetAddress) object);
+    connectedAddresses.add(position, (Client) object);
   }
 
   @Override
   public void add(Object object) {
-    connectedAddresses.add((InetAddress) object);
+    connectedAddresses.add((Client) object);
   }
 
   @Override
@@ -60,8 +60,8 @@ public class ConnectedAddressPanel extends ListView {
 
   @Override
   public void setData(Object object) {
-    connectedAddresses = (ArrayList<InetAddress>) object;
-    connectedAddresses = (ArrayList<InetAddress>) connectedAddresses.clone();
+    connectedAddresses = (ArrayList<Client>) object;
+    connectedAddresses = (ArrayList<Client>) connectedAddresses.clone();
   }
 
   private ActionListener closeButtonEvent(int index) {
@@ -77,6 +77,6 @@ public class ConnectedAddressPanel extends ListView {
   @Override
   protected void onItemClickedListener(int index) {
     super.onItemClickedListener(index);
-    new RemoteOsManagementView(new OperatingSystem().toString()).create();
+    new RemoteOsManagementView(new OperatingSystem().toString(), connectedAddresses.get(index)).create();
   }
 }
