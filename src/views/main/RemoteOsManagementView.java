@@ -31,7 +31,7 @@ public class RemoteOsManagementView extends BaseOsView {
 
   @Override
   public void refreshProcessesAction() {
-    String response = request.request(ProcessesController.RESOURCES);
+    String response = request.get(ProcessesController.RESOURCES);
     ProcessesManagement processes;
     if (getOperatingSystem().isWindowsOs()) {
       processes = WindowProcesses.convertFrom(response);
