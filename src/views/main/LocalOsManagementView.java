@@ -1,5 +1,7 @@
 package views.main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
@@ -27,5 +29,11 @@ public class LocalOsManagementView extends BaseOsView {
   public static void main(String[] args) {
     BaseOsView.turnOffBoldFont();
     new LocalOsManagementView().create();
+  }
+
+  @Override
+  public void refreshProcessesAction() {
+    getProcessesPanel().getProcessTable().getProcessesManagement().loadProcesses();
+    getProcessesPanel().getProcessTable().refreshData();
   }
 }
