@@ -72,7 +72,7 @@ public abstract class BaseOsView extends JPanel {
   public static JFrame createUi(BaseOsView ui) {
     // Create and set up the window.
     JFrame frame = new JFrame(ui.getTitle());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     // Add content to the window.
     frame.add(ui, BorderLayout.CENTER);
