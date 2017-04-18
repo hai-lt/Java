@@ -1,5 +1,7 @@
 package controllers;
 
+import java.net.DatagramPacket;
+
 import models.os.LocalOperatingSystem;
 import models.processes.ProcessInfo;
 import network.RestfulAPI;
@@ -7,7 +9,7 @@ import network.RestfulAPI;
 public class ProcessesController extends RestfulAPI {
   public static final String RESOURCES = "/processes";
 
-  public ProcessesController(String request) {
+  public ProcessesController(DatagramPacket request) {
     super(request);
   }
 
@@ -20,7 +22,7 @@ public class ProcessesController extends RestfulAPI {
   public String destroy() {
     long id;
     try {
-      id = Long.parseLong(getRequest().substring(getResources().length() + RestfulAPI.DELETE_METHOD.length() + 1));
+      id = Long.parseLong(getMessage().substring(getResources().length() + RestfulAPI.DELETE_METHOD.length() + 1));
     } catch (NumberFormatException e) {
       return e.getMessage();
     }
