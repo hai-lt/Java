@@ -15,10 +15,10 @@ public class Routes {
       return DemoController.demo();
     }
     if (receiveMessage.indexOf(ProcessesController.RESOURCES) == 0) {
-      return new ProcessesController(receiveMessage).solve();
+      return new ProcessesController(receive).solve();
     }
     if (receiveMessage.indexOf(MemoriesController.RESOURCES) == 0) {
-      return new MemoriesController(receiveMessage).solve();
+      return new MemoriesController(receive).solve();
     }
     return ROUTE_NOT_MATCH;
   }
