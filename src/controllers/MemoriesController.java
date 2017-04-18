@@ -1,12 +1,14 @@
 package controllers;
 
+import java.net.DatagramPacket;
+
 import models.os.LocalOperatingSystem;
 import network.RestfulAPI;
 
 public class MemoriesController extends RestfulAPI {
   public static final String RESOURCES = "/memories";
 
-  public MemoriesController(String request) {
+  public MemoriesController(DatagramPacket request) {
     super(request);
   }
 

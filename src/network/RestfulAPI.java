@@ -1,12 +1,14 @@
 package network;
 
+import java.net.DatagramPacket;
+
 public abstract class RestfulAPI {
   public static final String NOT_MATCH = "ROUTE NOT MATCH";
   public static final String FAILED_MESSAGE = "400 FAILED";
   public static final String DELETE_METHOD = "/DELETE";
   public static final String PUT_METHOD = "/PUT";
   public static final String POST_METHOD = "/POST";
-  private String request;
+  private DatagramPacket request;
 
   public abstract String create();
 
@@ -20,12 +22,13 @@ public abstract class RestfulAPI {
 
   public abstract String getResources();
 
-  public RestfulAPI(String request) {
+  public RestfulAPI(DatagramPacket request) {
     super();
     this.request = request;
   }
 
   public String solve() {
+    String request = getMessage();
     if (request.indexOf(getResources()) == -1) {
       return NOT_MATCH;
     }
@@ -51,8 +54,12 @@ public abstract class RestfulAPI {
     return FAILED_MESSAGE;
   }
 
-  public String getRequest() {
+  public DatagramPacket getRequest() {
     return request;
+  }
+
+  public String getMessage() {
+    return new String(request.getData()).trim();
   }
 
   public static String formatGet(String resource, long id) {
