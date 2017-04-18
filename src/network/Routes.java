@@ -14,12 +14,16 @@ public class Routes {
     if (receiveMessage.equals("/demo")) {
       return DemoController.demo();
     }
-    if (receiveMessage.indexOf(ProcessesController.RESOURCES) == 0) {
+    if (isResourcesOf(receiveMessage, ProcessesController.RESOURCES)) {
       return new ProcessesController(receive).solve();
     }
-    if (receiveMessage.indexOf(MemoriesController.RESOURCES) == 0) {
+    if (isResourcesOf(receiveMessage, MemoriesController.RESOURCES)) {
       return new MemoriesController(receive).solve();
     }
     return ROUTE_NOT_MATCH;
+  }
+
+  public static boolean isResourcesOf(String receiveMessage, String resources) {
+    return receiveMessage.indexOf(resources) == 0;
   }
 }
