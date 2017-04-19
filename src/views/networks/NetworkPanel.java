@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import models.os.OperatingSystem;
 import network.Client;
+import network.RestfulRequest;
 import network.Server;
 
 public class NetworkPanel extends JPanel {
@@ -38,7 +39,16 @@ public class NetworkPanel extends JPanel {
 
     JPanel remotePanel = new JPanel(new BorderLayout());
     remotePanel.setBorder(BorderFactory.createTitledBorder("Remote Management"));
-    remotePanel.add(new RemoteConnectionPanel(), BorderLayout.WEST);
+
+    RemoteConnectionPanel remoteConnectionPanel = new RemoteConnectionPanel() {
+
+      @Override
+      protected void connectAction(RestfulRequest request) {
+        connect(request);
+      }
+    };
+
+    remotePanel.add(remoteConnectionPanel, BorderLayout.WEST);
     connectedAddressPanel = new ConnectedAddressPanel(connected);
     remotePanel.add(connectedAddressPanel, BorderLayout.EAST);
     container.add(remotePanel, BorderLayout.SOUTH);
@@ -74,5 +84,15 @@ public class NetworkPanel extends JPanel {
       connected.add(new Client(Server.getInstance().getAdress(), Server.getInstance().getPort()));
     }
     return connected;
+  }
+
+  private void connect(RestfulRequest request) {
+    String response = request.get("/operating_systems");
+    if (response.equals(RestfulRequest.TIMEOUT_MESSAGE)) {
+      System.out.println("Can not connect to server. Please, check your address and password again");
+      return;
+    }
+    connectedAddressPanel.add(request);
+    connectedAddressPanel.notifyDataHasChanged();
   }
 }
