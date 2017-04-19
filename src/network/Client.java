@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class Client {
   private static final long DEFAULT_TIMEOUT = 3000;
-  private static final String TIMEOUT_MESSAGE = "Request timeout";
+  public static final String TIMEOUT_MESSAGE = "Request timeout";
   private InetAddress ipAddress;
   private int port;
   private long timeout;
