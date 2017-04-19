@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import models.os.OperatingSystem;
 import network.Client;
+import network.RestfulAPI;
+import network.RestfulRequest;
 import views.base.ListView;
 import views.main.RemoteOsManagementView;
 
@@ -82,6 +84,23 @@ public class ConnectedAddressPanel extends ListView {
   @Override
   protected void onItemClickedListener(int index) {
     super.onItemClickedListener(index);
-    new RemoteOsManagementView(new OperatingSystem().toString(), connectedAddresses.get(index)).create();
+    RestfulRequest request = (RestfulRequest) connectedAddresses.get(index);
+    new Thread(new Runnable() {
+
+      @Override
+      public void run() {
+        openRemoteOsManagement(request);
+      }
+    }).start();
+  }
+
+  private void openRemoteOsManagement(RestfulRequest request) {
+    String response = request.get("/operating_system");
+    try {
+      OperatingSystem os = OperatingSystem.convertFrom(response);
+      new RemoteOsManagementView(os, request).create();
+    } catch (Exception e) {
+      System.out.println("Check your network, please!");
+    }
   }
 }
