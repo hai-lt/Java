@@ -22,6 +22,11 @@ public class ConnectedAddressPanel extends ListView {
     setEmptyElementView(new JLabel("Have no remote connected"));
   }
 
+  public ConnectedAddressPanel(ArrayList<Client> connectedAddresses, int cols) {
+    super(connectedAddresses, cols);
+    this.connectedAddresses = connectedAddresses;
+  }
+
   @Override
   public Component getItem(int index) {
     JPanel pn = new JPanel();
