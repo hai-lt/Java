@@ -2,6 +2,8 @@ package views.networks;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -9,7 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class RemoteConnectionPanel extends JPanel {
+import network.RestfulRequest;
+
+public abstract class RemoteConnectionPanel extends JPanel {
   private JTextField txtIp, txtPassword;
 
   public RemoteConnectionPanel() {
@@ -49,8 +53,22 @@ public class RemoteConnectionPanel extends JPanel {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println(txtIp.getText() + " -- " + txtPassword.getText());
+        InetAddress inetAddress;
+        try {
+          inetAddress = InetAddress.getByName(txtIp.getText().trim());
+          int port = Integer.parseInt(txtPassword.getText().trim());
+          new Thread(new Runnable() {
+            @Override
+            public void run() {
+              connectAction(new RestfulRequest(inetAddress, port));
+            }
+          }).start();
+        } catch (UnknownHostException e1) {
+          System.out.println("Enter right address plz");
+        }
       }
     };
   }
+
+  protected abstract void connectAction(RestfulRequest request);
 }

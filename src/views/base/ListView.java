@@ -132,6 +132,7 @@ public abstract class ListView extends JPanel {
       });
     }
     setEmptyElementView();
+    container.revalidate();
   };
 
   protected void onItemReleasedListener(int index) {

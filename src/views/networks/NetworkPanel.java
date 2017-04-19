@@ -1,16 +1,12 @@
 package views.networks;
 
 import java.awt.BorderLayout;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import models.os.OperatingSystem;
-import network.Client;
-import network.Server;
+import network.RestfulRequest;
 
 public class NetworkPanel extends JPanel {
   private ConnectedAddressPanel connectedAddressPanel;
@@ -22,28 +18,32 @@ public class NetworkPanel extends JPanel {
     scrollPane.getVerticalScrollBar().setUnitIncrement(15);
     add(scrollPane, BorderLayout.CENTER);
 
-    ArrayList<Client> connected = getConnectedClient();
+    RemoteConnectionPanel remoteConnectionPanel = new RemoteConnectionPanel() {
 
-    JPanel remotePanel = new JPanel(new BorderLayout());
-    remotePanel.setBorder(BorderFactory.createTitledBorder("Remote Management"));
-    remotePanel.add(new RemoteConnectionPanel(), BorderLayout.WEST);
+      @Override
+      protected void connectAction(RestfulRequest request) {
+        connect(request);
+      }
+    };
 
     JPanel serverPanel = new JPanel();
     serverPanel.add(new ServerManagementPanel(), BorderLayout.WEST);
-    serverPanel.add(new RemoteConnectionPanel(), BorderLayout.EAST);
+    serverPanel.add(remoteConnectionPanel, BorderLayout.EAST);
     container.add(serverPanel, BorderLayout.NORTH);
 
-    connectedAddressPanel = new ConnectedAddressPanel(connected, 2);
+    connectedAddressPanel = new ConnectedAddressPanel(new ArrayList<>(), 2);
     connectedAddressPanel.setBorder(BorderFactory.createTitledBorder("Connected Server"));
     connectedAddressPanel.setEmptyElementView(new JLabel("Has no server connected!"));
     container.add(connectedAddressPanel, BorderLayout.CENTER);
   }
 
-  private ArrayList<Client> getConnectedClient() {
-    ArrayList<Client> connected = new ArrayList<>();
-    for (int i = 0; i < 3; i++) {
-      connected.add(new Client(Server.getInstance().getAdress(), Server.getInstance().getPort()));
+  private void connect(RestfulRequest request) {
+    String response = request.get("/operating_systems");
+    if (response.equals(RestfulRequest.TIMEOUT_MESSAGE)) {
+      System.out.println("Can not connect to server. Please, check your address and password again");
+      return;
     }
-    return connected;
+    connectedAddressPanel.add(request);
+    connectedAddressPanel.notifyDataHasChanged();
   }
 }
