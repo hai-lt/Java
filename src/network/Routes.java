@@ -4,6 +4,7 @@ import java.net.DatagramPacket;
 
 import controllers.DemoController;
 import controllers.MemoriesController;
+import controllers.OperatingSystemController;
 import controllers.ProcessesController;
 
 public class Routes {
@@ -19,6 +20,9 @@ public class Routes {
     }
     if (isResourcesOf(receiveMessage, MemoriesController.RESOURCES)) {
       return new MemoriesController(receive).solve();
+    }
+    if (isResourcesOf(receiveMessage, OperatingSystemController.RESOURCES)) {
+      return new OperatingSystemController(receive).solve();
     }
     return ROUTE_NOT_MATCH;
   }
