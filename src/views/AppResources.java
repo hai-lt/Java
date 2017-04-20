@@ -2,6 +2,9 @@ package views;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.net.DatagramPacket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JLabel;
 
@@ -32,6 +35,18 @@ public class AppResources {
 
   public static void notifyMessage(JLabel label, String message, long duration) {
     notifyMessage(label, message, duration, COLOR_SUCCESS);
+  }
+
+  public static String getCurrentTime() {
+    return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
+  }
+
+  public static void log(DatagramPacket incoming) {
+    System.out.println(AppResources.getCurrentTime() + " has requested: " + new String(incoming.getData()));
+  }
+
+  public static void log(String message) {
+    System.out.println(AppResources.getCurrentTime() + " message: " + message);
   }
 
 }
