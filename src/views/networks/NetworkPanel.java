@@ -9,9 +9,11 @@ import javax.swing.JScrollPane;
 
 import controllers.OperatingSystemController;
 import network.RestfulRequest;
+import views.AppResources;
 
 public class NetworkPanel extends JPanel {
   private ConnectedAddressPanel connectedAddressPanel;
+  private JLabel lbStatus;
 
   public NetworkPanel() {
     super(new BorderLayout(10, 10));
@@ -37,12 +39,18 @@ public class NetworkPanel extends JPanel {
     connectedAddressPanel.setBorder(BorderFactory.createTitledBorder("Connected Server"));
     connectedAddressPanel.setEmptyElementView(new JLabel("Has no server connected!"));
     container.add(connectedAddressPanel, BorderLayout.CENTER);
+
+    lbStatus = new JLabel(AppResources.WELCOME_MESSAGE);
+    lbStatus.setForeground(AppResources.COLOR_SUCCESS);
+    add(lbStatus, BorderLayout.SOUTH);
   }
 
   private void connect(RestfulRequest request) {
+    AppResources.notifyMessage(lbStatus, "Connecting to server... Please waiting for a minute", request.getTimeout());
     String response = request.get(OperatingSystemController.RESOURCES);
     if (response.equals(RestfulRequest.TIMEOUT_MESSAGE)) {
-      System.out.println("Can not connect to server. Please, check your address and password again");
+      AppResources.notifyMessage(lbStatus, "Can not connect to server. Please check your connection again!", 3000,
+          AppResources.COLOR_WARNING);
       return;
     }
     connectedAddressPanel.add(request);
