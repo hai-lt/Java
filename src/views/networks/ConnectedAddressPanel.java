@@ -8,9 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controllers.OperatingSystemController;
 import models.os.OperatingSystem;
 import network.Client;
-import network.RestfulAPI;
 import network.RestfulRequest;
 import views.base.ListView;
 import views.main.RemoteOsManagementView;
@@ -95,7 +95,7 @@ public class ConnectedAddressPanel extends ListView {
   }
 
   private void openRemoteOsManagement(RestfulRequest request) {
-    String response = request.get("/operating_system");
+    String response = request.get(OperatingSystemController.RESOURCES);
     try {
       OperatingSystem os = OperatingSystem.convertFrom(response);
       new RemoteOsManagementView(os, request).create();

@@ -6,6 +6,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import controllers.OperatingSystemController;
 import network.RestfulRequest;
 
 public class NetworkPanel extends JPanel {
@@ -38,7 +40,7 @@ public class NetworkPanel extends JPanel {
   }
 
   private void connect(RestfulRequest request) {
-    String response = request.get("/operating_systems");
+    String response = request.get(OperatingSystemController.RESOURCES);
     if (response.equals(RestfulRequest.TIMEOUT_MESSAGE)) {
       System.out.println("Can not connect to server. Please, check your address and password again");
       return;

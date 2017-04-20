@@ -39,7 +39,10 @@ public class RootFilesManagement {
     for (Memory memory : memories) {
       string += memory.toString() + "; ";
     }
-    return string;
+    if (string.equals("")) {
+      return "";
+    }
+    return string.substring(0, string.length() - 2);
   }
 
   public static RootFilesManagement convertFrom(String string) {
