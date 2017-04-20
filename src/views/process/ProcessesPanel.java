@@ -19,7 +19,6 @@ public abstract class ProcessesPanel extends JPanel {
   private final static int SUCCESS = 1;
   private final static int DANGER = 2;
 
-  private final static String WELCOME_NOTIFICATION = "Welcome to OS Management designed by Hai Le Tan";
   private ProcessesManagement processesManagement;
   private ProcessTable tbProcesses;
   private JButton btnRefresh, btnKillProcess;
@@ -48,7 +47,7 @@ public abstract class ProcessesPanel extends JPanel {
 
     add(buttons, BorderLayout.NORTH);
 
-    notificationLabel = new JLabel(WELCOME_NOTIFICATION);
+    notificationLabel = new JLabel(AppResources.WELCOME_MESSAGE);
     notificationLabel.setForeground(getColor(SUCCESS));
     add(notificationLabel, BorderLayout.SOUTH);
   }
@@ -106,7 +105,7 @@ public abstract class ProcessesPanel extends JPanel {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-        notificationLabel.setText(WELCOME_NOTIFICATION);
+        notificationLabel.setText(AppResources.WELCOME_MESSAGE);
         notificationLabel.setForeground(getColor(SUCCESS));
         ;
       }
