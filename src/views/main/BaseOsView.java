@@ -47,7 +47,7 @@ public abstract class BaseOsView extends JPanel {
     };
 
     addTab(processesPanel, PROCESSES_LABEL, KeyEvent.VK_P);
-    addTab(new MemoriesPanel(os.getRootFilesManagement()), MEMORIES_LABEL, KeyEvent.VK_M);
+    addTab(new MemoriesPanel(os.getRootFilesManagement().getMemories()), MEMORIES_LABEL, KeyEvent.VK_M);
 
   }
 
