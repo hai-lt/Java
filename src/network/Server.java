@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Random;
 
+import views.AppResources;
+
 public class Server {
   public final static int MAX_PORT = 65536;
   public final static int MAX_RECEIVING_BYTES = 35000;
@@ -40,20 +42,21 @@ public class Server {
     try {
       isRunning = true;
       socket = new DatagramSocket(getPort(), getAdress());
+      AppResources.log("Server opened");
       while (true) {
         byte[] incomingData = new byte[MAX_RECEIVING_BYTES];
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
         socket.receive(incomingPacket);
 
-        log(incomingPacket);
+        AppResources.log(incomingPacket);
 
         solve(incomingPacket);
       }
 
     } catch (SocketException e) {
-      e.printStackTrace();
-    } catch (IOException i) {
-      i.printStackTrace();
+      AppResources.log(e.getMessage());
+    } catch (IOException e) {
+      AppResources.log(e.getMessage());
     }
     isRunning = false;
   }
@@ -73,10 +76,6 @@ public class Server {
     }
   }
 
-  private void log(DatagramPacket incoming) {
-    System.out.println("Requested: " + new String(incoming.getData()));
-  }
-
   private void solve(DatagramPacket incomingPacket) {
     new Thread(new Runnable() {
 
@@ -91,7 +90,7 @@ public class Server {
           DatagramPacket replyPacket = new DatagramPacket(data, data.length, incomingAddress, port);
           socket.send(replyPacket);
         } catch (Exception e) {
-          System.out.println(e.getMessage());
+          AppResources.log(e.getMessage());
         }
       }
     }).start();
@@ -101,5 +100,4 @@ public class Server {
     Server server = Server.getInstance();
     server.run();
   }
-
 }
