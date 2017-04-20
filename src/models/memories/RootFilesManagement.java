@@ -32,6 +32,10 @@ public class RootFilesManagement {
   public ArrayList<Memory> getMemories() {
     return memories;
   }
+  
+  public void setMemories(ArrayList<Memory> memories) {
+    this.memories = memories;
+  }
 
   @Override
   public String toString() {
