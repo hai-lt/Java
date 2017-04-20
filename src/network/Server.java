@@ -48,7 +48,8 @@ public class Server {
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
         socket.receive(incomingPacket);
 
-        AppResources.log(incomingPacket);
+        AppResources
+            .log(incomingPacket.getAddress().toString() + " has request " + new String(incomingPacket.getData()));
 
         solve(incomingPacket);
       }
