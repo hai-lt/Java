@@ -1,39 +1,51 @@
 package views.memories;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import models.memories.RootFilesManagement;
+import java.awt.Component;
+import java.util.ArrayList;
 
-public class MemoriesPanel extends JPanel {
+import models.memories.Memory;
+import views.base.ListView;
+
+public class MemoriesPanel extends ListView {
   public static final int DEFAULT_COLS = 2;
-  private RootFilesManagement memories;
-  private int cols;
+  private ArrayList<Memory> memories;
 
-  public void setMemories(RootFilesManagement memories) {
-    this.memories = memories;
+  public MemoriesPanel(Object object) {
+    super(object, DEFAULT_COLS);
   }
 
-  public MemoriesPanel(RootFilesManagement memories) {
-    super(new BorderLayout());
-    this.memories = memories;
-    setUI();
+  @Override
+  public void setData(Object object) {
+    memories = (ArrayList<Memory>) object;
   }
 
-  private void setUI() {
-    cols = DEFAULT_COLS;
-    JPanel memoriesContainer = new JPanel(new GridBagLayout());
+  @Override
+  public Component getItem(int index) {
+    return new MemoryPanel(memories.get(index));
+  }
 
-    GridBagConstraints contraint = new GridBagConstraints();
-    contraint.fill = GridBagConstraints.HORIZONTAL;
-    contraint.weightx = 1;
-    int rows = this.memories.getMemories().size() / cols + 1;
-    for (int i = 0; i < this.memories.getMemories().size(); i++) {
-      contraint.gridx = i % rows;
-      contraint.gridy = i / rows;
-      memoriesContainer.add(new MemoryPanel(this.memories.getMemories().get(i)), contraint);
-    }
-    add(memoriesContainer, BorderLayout.NORTH);
+  @Override
+  public void add(Object object) {
+    memories.add((Memory) object);
+  }
+
+  @Override
+  public void add(int index, Object object) {
+    memories.add(index, (Memory) object);
+  }
+
+  @Override
+  public void removeData(int index) {
+    memories.remove(index);
+  }
+
+  @Override
+  public void clearData() {
+    memories.clear();
+  }
+
+  @Override
+  public int getCount() {
+    return memories.size();
   }
 }
