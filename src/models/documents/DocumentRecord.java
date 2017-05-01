@@ -1,18 +1,22 @@
 package models.documents;
 
+import java.util.ArrayList;
+import java.util.Vector;
+
 import hailt.models.ObjectRecord;
 
 public class DocumentRecord {
   private String code, subject, userCode, content, src, sended_at;
+
   public DocumentRecord(ObjectRecord object) {
     setAttributes(object.getValues());
   }
-  
-  public DocumentRecord(String...strings) {
+
+  public DocumentRecord(String... strings) {
     setAttributes(strings);
   }
-  
-  public void setAttributes(String...strings) {
+
+  public void setAttributes(String... strings) {
     code = strings[0];
     subject = strings[1];
     userCode = strings[2];
@@ -68,4 +72,5 @@ public class DocumentRecord {
   public void setSended_at(String sended_at) {
     this.sended_at = sended_at;
   }
+
 }

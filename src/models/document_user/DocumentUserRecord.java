@@ -1,6 +1,12 @@
 package models.document_user;
 
+import java.util.ArrayList;
+
 import hailt.models.ObjectRecord;
+import models.documents.Document;
+import models.documents.DocumentRecord;
+import models.users.User;
+import models.users.UserRecord;
 
 public class DocumentUserRecord {
   private String userCode, documentCode, receivedAt;
@@ -39,6 +45,30 @@ public class DocumentUserRecord {
 
   public void setReceivedAt(String receivedAt) {
     this.receivedAt = receivedAt;
+  }
+
+  public UserRecord receiver() {
+    try {
+      return new UserRecord(new User().all("code = " + getUserCode()).get(0));
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public DocumentRecord document() {
+    try {
+      return new DocumentRecord(new Document().all("code = " + getDocumentCode()).get(0));
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public static ArrayList<DocumentUserRecord> convertFrom(ArrayList<ObjectRecord> objects) {
+    ArrayList<DocumentUserRecord> du = new ArrayList<>();
+    for (ObjectRecord objectRecord : objects) {
+      du.add(new DocumentUserRecord(objectRecord));
+    }
+    return du;
   }
 
 }
