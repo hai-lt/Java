@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.net.DatagramPacket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
