@@ -7,6 +7,6 @@ public class IncommingFilesView extends JPanel {
 
   public IncommingFilesView() {
     super();
-    add(new JLabel("Văn bản đến"));
+    add(new ListDocumentView());
   }
 }
