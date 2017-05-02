@@ -44,6 +44,14 @@ public class ListDocumentView extends JPanel {
     add(scrollPane, BorderLayout.CENTER);
   }
 
+  public DocumentsTable getTbDocuments() {
+    return tbDocuments;
+  }
+
+  public void setTbDocuments(DocumentsTable tbDocuments) {
+    this.tbDocuments = tbDocuments;
+  }
+
   private ActionListener searchDocument() {
     return new ActionListener() {
 
@@ -53,8 +61,8 @@ public class ListDocumentView extends JPanel {
         String userCode = txtSender.getText().trim();
         String conditions = "";
         if (!userCode.equals("")) {
-          conditions +=" INNER JOIN user ON document.user_code = user.code"
-              + " WHERE user.full_name LIKE '%" + userCode + "%'";
+          conditions += " INNER JOIN user ON document.user_code = user.code" + " WHERE user.full_name LIKE '%"
+              + userCode + "%'";
         }
         if (!subject.equals("")) {
           if (!conditions.equals("")) {
@@ -63,8 +71,8 @@ public class ListDocumentView extends JPanel {
           conditions += "subject LIKE '%" + subject + "%'";
         }
         if (!conditions.equals("")) {
-          tbDocuments
-              .setDocuments(DocumentRecord.convertFrom(new Document().query("select distinct * from document " + conditions)));
+          tbDocuments.setDocuments(
+              DocumentRecord.convertFrom(new Document().query("select distinct * from document " + conditions)));
         } else {
           tbDocuments.setDocuments(DocumentRecord.convertFrom(new Document().all()));
         }
