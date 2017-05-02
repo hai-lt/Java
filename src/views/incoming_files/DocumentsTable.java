@@ -39,6 +39,14 @@ public class DocumentsTable extends JTable {
     }
   }
 
+  public ArrayList<DocumentRecord> getDocuments() {
+    return documents;
+  }
+
+  public void setDocuments(ArrayList<DocumentRecord> documents) {
+    this.documents = documents;
+  }
+
   public void setHeaders() {
     setHeaders(TITLES);
   }
