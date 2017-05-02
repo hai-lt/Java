@@ -73,4 +73,12 @@ public class DocumentRecord {
     this.sended_at = sended_at;
   }
 
+  public static ArrayList<DocumentRecord> convertFrom(ArrayList<ObjectRecord> documents) {
+    ArrayList<DocumentRecord> docs = new ArrayList<>();
+    for (ObjectRecord objectRecord : documents) {
+      docs.add(new DocumentRecord(objectRecord));
+    }
+    return docs;
+  }
+
 }

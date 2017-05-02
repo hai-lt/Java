@@ -12,9 +12,11 @@ public class DocumentUserRecord {
   private String userCode, documentCode, receivedAt;
 
   public DocumentUserRecord(ObjectRecord object) {
+    setAttributes(object.getValues());
   }
 
   public DocumentUserRecord(String... strings) {
+    setAttributes(strings);
   }
 
   public void setAttributes(String... strings) {
@@ -49,7 +51,7 @@ public class DocumentUserRecord {
 
   public UserRecord receiver() {
     try {
-      return new UserRecord(new User().all("code = " + getUserCode()).get(0));
+      return new UserRecord(new User().all("code = '" + getUserCode() + "'").get(0));
     } catch (Exception e) {
       return null;
     }
