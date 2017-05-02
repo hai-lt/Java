@@ -35,8 +35,8 @@ public class DocumentRecord {
 
   public ArrayList<UserRecord> receivers() {
     return UserRecord.convertFrom(
-        new User().query("SELECT * FORM user" + "INNER JOIN document_user ON user.code = document_user.user_code"
-            + "INNER JOIN document ON document.code = document_user.document_code"));
+        new User().query("SELECT * FROM user" + " INNER JOIN document_user ON user.code = document_user.user_code"
+            + " INNER JOIN document ON document.code = document_user.document_code"));
   }
 
   public String getCode() {
