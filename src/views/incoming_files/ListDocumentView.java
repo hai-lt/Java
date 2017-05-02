@@ -64,7 +64,7 @@ public class ListDocumentView extends JPanel {
           if (!conditions.equals("")) {
             conditions += " AND ";
           }
-          conditions += "subject LIKE '%" + subject + "%'";
+          conditions += "WHERE subject LIKE '%" + subject + "%'";
         }
         if (!conditions.equals("")) {
           tbDocuments.setDocuments(
