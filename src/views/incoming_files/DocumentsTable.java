@@ -41,6 +41,7 @@ public class DocumentsTable extends JTable {
 
   public void setHeaders() {
     setHeaders(TITLES);
+
   }
 
   public void refreshData() {
@@ -56,7 +57,7 @@ public class DocumentsTable extends JTable {
       document.add(documentRecord.getCode());
       document.add(documentRecord.getSubject());
 
-      ArrayList<ObjectRecord> receivers = new DocumentUser().all("document_code = " + documentRecord.getCode());
+      ArrayList<ObjectRecord> receivers = new DocumentUser().all("document_code = '" + documentRecord.getCode() + "'");
       ArrayList<DocumentUserRecord> dus = DocumentUserRecord.convertFrom(receivers);
       String names = "";
       for (DocumentUserRecord documentUserRecord : dus) {
