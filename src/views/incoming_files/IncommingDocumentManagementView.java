@@ -2,9 +2,9 @@ package views.incoming_files;
 
 import javax.swing.JPanel;
 
-public class IncommingFilesView extends JPanel {
+public class IncommingDocumentManagementView extends JPanel {
 
-  public IncommingFilesView() {
+  public IncommingDocumentManagementView() {
     super();
     add(new ListDocumentView());
   }
