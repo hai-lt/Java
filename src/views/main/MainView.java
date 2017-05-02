@@ -12,6 +12,7 @@ import views.users_management.UsersManagementView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,10 +34,10 @@ public class MainView extends JPanel {
     addTab(new IncommingDocumentManagementView(), INCOMING_FILE_LABEL, KeyEvent.VK_1);
     addTab(new OutgoingFilesView(), OUTGOING_FILE_LABEL, KeyEvent.VK_2);
     addTab(new PersonalView(), PERSONAL_LABEL, KeyEvent.VK_3);
-
   }
 
   public void addTab(Component component, String tabName, int mnemonic) {
+    component.setPreferredSize(new Dimension(500, 500));
     tabMenu.add(tabName, component);
     tabMenu.setMnemonicAt(tabMenu.getTabCount() - 1, mnemonic);
   }
