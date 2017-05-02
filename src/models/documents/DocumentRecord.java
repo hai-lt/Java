@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import hailt.models.ObjectRecord;
+import models.document_user.DocumentUser;
+import models.document_user.DocumentUserRecord;
+import models.users.User;
+import models.users.UserRecord;
 
 public class DocumentRecord {
   private String code, subject, userCode, content, src, sended_at;
@@ -23,6 +27,16 @@ public class DocumentRecord {
     content = strings[3];
     src = strings[4];
     sended_at = strings[5];
+  }
+
+  public UserRecord sender() {
+    return new UserRecord(new User().all("code = '" + userCode + "'").get(0));
+  }
+
+  public ArrayList<UserRecord> receivers() {
+    return UserRecord.convertFrom(
+        new User().query("SELECT * FORM user" + "INNER JOIN document_user ON user.code = document_user.user_code"
+            + "INNER JOIN document ON document.code = document_user.document_code"));
   }
 
   public String getCode() {
