@@ -53,8 +53,7 @@ public class ListDocumentView extends JPanel {
         String userCode = txtSender.getText().trim();
         String conditions = "";
         if (!userCode.equals("")) {
-          conditions += "INNER JOIN document_user ON document_user.document_code = document.code"
-              + " INNER JOIN user ON document_user.user_code = user.code"
+          conditions +=" INNER JOIN user ON document.user_code = user.code"
               + " WHERE user.full_name LIKE '%" + userCode + "%'";
         }
         if (!subject.equals("")) {

@@ -12,7 +12,7 @@ import models.document_user.DocumentUserRecord;
 import models.documents.DocumentRecord;
 
 public class DocumentsTable extends JTable {
-  public static final String[] TITLES = { "Mã văn bản", "Chủ đề", "Người nhận", "Ngày gửi", "" };
+  public static final String[] TITLES = { "Mã văn bản", "Chủ đề", "Người gửi", "Ngày gửi", "" };
 
   private ArrayList<DocumentRecord> documents;
   private Vector<String> headers;
@@ -66,11 +66,7 @@ public class DocumentsTable extends JTable {
 
       ArrayList<ObjectRecord> receivers = new DocumentUser().all("document_code = '" + documentRecord.getCode() + "'");
       ArrayList<DocumentUserRecord> dus = DocumentUserRecord.convertFrom(receivers);
-      String names = "";
-      for (DocumentUserRecord documentUserRecord : dus) {
-        names += documentUserRecord.receiver().getFullName() + ", ";
-      }
-      document.add(names);
+      document.add(documentRecord.sender().getFullName());
       document.add(documentRecord.getSended_at());
       document.add("Xóa");
       documentVectors.add(document);
