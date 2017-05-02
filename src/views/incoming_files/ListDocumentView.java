@@ -26,9 +26,9 @@ public class ListDocumentView extends JPanel {
 
     JPanel filterView = new JPanel();
     filterView.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
-    filterView.add(new JLabel("Tên văn bản"));
+    filterView.add(new JLabel("Chủ đề"));
     filterView.add(txtDocument);
-    filterView.add(new JLabel("Tên người nhận"));
+    filterView.add(new JLabel("Tên người gửi"));
     filterView.add(txtSender);
     btnSearch = new JButton("Tìm");
     btnSearch.addActionListener(searchDocument());
