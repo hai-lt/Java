@@ -1,6 +1,8 @@
 package views.incoming_files;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -58,6 +60,13 @@ public class IncommingDocumentManagementView extends JPanel {
         DocumentRecord document = tb.getDocuments().get(row);
         if (documentDetailView == null) {
           documentDetailView = new IncomingDocumentDetailView(document);
+          documentDetailView.getBtnBack().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              showDocumentsView();
+            }
+          });
           add(documentDetailView, BorderLayout.NORTH);
         } else {
           documentDetailView.setDocument(document);

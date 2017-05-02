@@ -36,6 +36,10 @@ public class IncomingDocumentDetailView extends JPanel {
     add(container, BorderLayout.NORTH);
   }
 
+  public JButton getBtnBack() {
+    return btnBack;
+  }
+
   public MouseListener openFile() {
     return new MouseListener() {
 
