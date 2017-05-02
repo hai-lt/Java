@@ -134,5 +134,7 @@ public class IncomingDocumentDetailView extends JPanel {
     lbReceiver.setText(receivers);
     lbSubject.setText(document.getSubject());
     txtContent.setText(document.getContent());
+    txtPathDocument.setText(document.getSrc());
+    txtPathDocument.setEnabled(false);
   }
 }
