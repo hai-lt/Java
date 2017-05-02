@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,7 +16,6 @@ import models.documents.DocumentRecord;
 
 public class ListDocumentView extends JPanel {
   private JTextField txtDocument, txtSender;
-  private JComboBox<String> slSubjects;
   private JButton btnSearch;
   private DocumentsTable tbDocuments;
 
@@ -25,7 +23,6 @@ public class ListDocumentView extends JPanel {
     super(new BorderLayout());
     txtDocument = new JTextField(10);
     txtSender = new JTextField(10);
-    slSubjects = new JComboBox<>(Document.SUBJECTS);
 
     JPanel filterView = new JPanel();
     filterView.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
@@ -33,7 +30,6 @@ public class ListDocumentView extends JPanel {
     filterView.add(txtDocument);
     filterView.add(new JLabel("Tên người nhận"));
     filterView.add(txtSender);
-    filterView.add(slSubjects);
     btnSearch = new JButton("Tìm");
     btnSearch.addActionListener(searchDocument());
     filterView.add(btnSearch);
