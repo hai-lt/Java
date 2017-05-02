@@ -137,4 +137,13 @@ public class IncomingDocumentDetailView extends JPanel {
     txtPathDocument.setText(document.getSrc());
     txtPathDocument.setEnabled(false);
   }
+
+  public DocumentRecord getDocument() {
+    return document;
+  }
+
+  public void setDocument(DocumentRecord document) {
+    this.document = document;
+  }
+
 }
