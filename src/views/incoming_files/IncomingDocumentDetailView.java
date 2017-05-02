@@ -1,117 +1,108 @@
 package views.incoming_files;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import models.documents.DocumentRecord;
-import models.users.UserRecord;
-import views.AppResources;
-import views.base.ImageHandle;
-
 public class IncomingDocumentDetailView extends JPanel {
-  private DocumentRecord document;
+  private JTextField txtPathDocument;
+  private JLabel lblFile, lbSubject, lbSender, lbReceiver;
+  private JButton btnBack;
+  private JTextArea txtContent;
 
-  private JLabel sender, receiver, subject;
-  private JTextArea content;
-  private JTextField path;
-  private JButton back, gotoSrc;
-  private JPanel userInfo;
+  /**
+   * Create the panel.
+   */
+  public IncomingDocumentDetailView() {
+    setLayout(null);
 
-  public IncomingDocumentDetailView(DocumentRecord document) {
-    super(new BorderLayout());
-    initializeView();
-    this.document = document;
-    addData();
-    setUI();
+    JLabel lbSenderTitle = new JLabel("Người gửi:");
+    lbSenderTitle.setBounds(29, 39, 79, 15);
+    add(lbSenderTitle);
+
+    JLabel lbReceiversTitle = new JLabel("Ngời nhận:");
+    lbReceiversTitle.setBounds(184, 39, 84, 15);
+    add(lbReceiversTitle);
+
+    JLabel lbSubjectTitle = new JLabel("Chủ đề:");
+    lbSubjectTitle.setBounds(29, 66, 59, 15);
+    add(lbSubjectTitle);
+
+    JLabel lb = new JLabel("Nội dung");
+    lb.setBounds(29, 103, 70, 15);
+    add(lb);
+
+    btnBack = new JButton("Trở về");
+    btnBack.setBounds(347, 263, 91, 25);
+    add(btnBack);
+
+    txtContent = new JTextArea();
+    txtContent.setText("Content");
+    txtContent.setBounds(117, 103, 302, 108);
+    add(txtContent);
+
+    lblFile = new JLabel("File");
+    lblFile.setBounds(83, 232, 33, 15);
+    add(lblFile);
+    lblFile.addMouseListener(openFile());
+
+    txtPathDocument = new JTextField();
+    txtPathDocument.setText("path/your file");
+    txtPathDocument.setBounds(117, 230, 302, 19);
+    add(txtPathDocument);
+    txtPathDocument.setColumns(10);
+
+    lbSubject = new JLabel("Răng cũng được");
+    lbSubject.setBounds(117, 66, 302, 15);
+    add(lbSubject);
+
+    lbSender = new JLabel("Tấn Hải");
+    lbSender.setBounds(111, 39, 91, 15);
+    add(lbSender);
+
+    lbReceiver = new JLabel("Tấn Hải");
+    lbReceiver.setBounds(274, 39, 145, 15);
+    add(lbReceiver);
+
   }
 
-  public void initializeView() {
-    sender = new JLabel();
-    receiver = new JLabel();
-    userInfo = new JPanel(new BorderLayout(20, 10));
-    userInfo.add(sender, BorderLayout.WEST);
-    userInfo.add(receiver, BorderLayout.EAST);
-
-    subject = new JLabel();
-    content = new JTextArea(5, 15);
-    path = new JTextField();
-    back = new JButton("Back");
-    back.addActionListener(new ActionListener() {
+  public MouseListener openFile() {
+    return new MouseListener() {
 
       @Override
-      public void actionPerformed(ActionEvent e) {
-        backAction();
+      public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+
       }
-    });
-    gotoSrc = new JButton(new ImageHandle(AppResources.FILE_ATTACHMENT_ICON).getIcon());
-    gotoSrc.addActionListener(new ActionListener() {
 
       @Override
-      public void actionPerformed(ActionEvent e) {
-        System.out.println("Open dialog");
+      public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+
       }
-    });
-  }
 
-  public void addData() {
-    sender.setText("Người gửi: " + document.sender().getFullName());
-    String usersName = "";
-    for (UserRecord user : document.receivers()) {
-      usersName += user.getFullName() + ", ";
-    }
-    receiver.setText("Người nhận: " + usersName);
-    subject.setText("Chủ đề: " + document.getSubject());
-    content.setText(document.getContent());
-    path.setText(document.getSrc());
-  }
+      @Override
+      public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
 
-  public void setUI() {
-    JPanel north = new JPanel(new BorderLayout());
-    // show user info
-    north.add(userInfo, BorderLayout.NORTH);
+      }
 
-    // add subject view
-    JPanel subjectView = new JPanel(new BorderLayout());
-    subjectView.add(subject, BorderLayout.NORTH);
-    north.add(subjectView, BorderLayout.CENTER);
-    add(north, BorderLayout.NORTH);
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
 
-    JPanel center = new JPanel(new BorderLayout());
-    // add content view
-    JPanel contentView = new JPanel(new BorderLayout());
-    contentView.add(new JLabel("Nội dung: "), BorderLayout.WEST);
-    contentView.add(content, BorderLayout.EAST);
-    center.add(contentView, BorderLayout.NORTH);
+      }
 
-    // add attachment view
-    JPanel attachmentView = new JPanel();
-    attachmentView.add(gotoSrc);
-    path.setEnabled(false);
-    attachmentView.add(path);
-    center.add(attachmentView, BorderLayout.CENTER);
-    add(center, BorderLayout.CENTER);
-  }
-
-  public DocumentRecord getDocument() {
-    return document;
-  }
-
-  public void setDocument(DocumentRecord document) {
-    this.document = document;
-  }
-
-  public void notifyDataHasChanged() {
-    addData();
-  }
-
-  public void backAction() {
-    setVisible(false);
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        System.out.println("Back");
+      }
+    };
   }
 }
