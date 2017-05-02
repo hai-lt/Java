@@ -41,7 +41,6 @@ public class DocumentsTable extends JTable {
 
   public void setHeaders() {
     setHeaders(TITLES);
-
   }
 
   public void refreshData() {
@@ -63,6 +62,7 @@ public class DocumentsTable extends JTable {
       for (DocumentUserRecord documentUserRecord : dus) {
         names += documentUserRecord.receiver().getFullName() + ", ";
       }
+      document.add(names);
       document.add(documentRecord.getSended_at());
       document.add("Xóa");
       documentVectors.add(document);
