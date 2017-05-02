@@ -11,10 +11,10 @@ import models.users.UserRecord;
 import views.AppResources;
 import views.base.ImageHandle;
 
-public class IncomingDocument extends JPanel {
+public class IncomingDocumentDetailView extends JPanel {
   private DocumentRecord document;
 
-  public IncomingDocument(DocumentRecord document) {
+  public IncomingDocumentDetailView(DocumentRecord document) {
     super();
     this.document = document;
     // show user info
