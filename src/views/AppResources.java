@@ -14,6 +14,8 @@ public class AppResources {
 
   public static final String WELCOME_MESSAGE = "Welcome to OS Management designed by Hai Le Tan";
 
+  public static final String FILE_ATTACHMENT_ICON = "resources/file.ico";
+
   public static void notifyMessage(JLabel label, String message, long duration, Color type) {
     String old_message = label.getText();
     new Thread(new Runnable() {

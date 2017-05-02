@@ -1,5 +1,7 @@
 package models.users;
 
+import java.util.ArrayList;
+
 import hailt.models.ObjectRecord;
 
 public class UserRecord {
@@ -9,12 +11,12 @@ public class UserRecord {
   public UserRecord(ObjectRecord object) {
     setAttributes(object.getValues());
   }
-  
-  public UserRecord(String...strings) {
+
+  public UserRecord(String... strings) {
     setAttributes(strings);
   }
-  
-  public void setAttributes(String...strings) {
+
+  public void setAttributes(String... strings) {
     code = strings[0];
     fullName = strings[1];
     phone = strings[2];
@@ -105,5 +107,13 @@ public class UserRecord {
 
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+  public static ArrayList<UserRecord> convertFrom(ArrayList<ObjectRecord> records) {
+    ArrayList<UserRecord> users = new ArrayList<>();
+    for (ObjectRecord objectRecord : records) {
+      users.add(new UserRecord(objectRecord));
+    }
+    return users;
   }
 }
