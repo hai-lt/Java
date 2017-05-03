@@ -1,5 +1,6 @@
 package views.outgoing_files;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -34,6 +35,16 @@ public class DocumentsTable extends JTable {
     this.headers = new Vector<>();
     for (String string : headers) {
       this.headers.add(string);
+    }
+  }
+
+  public boolean removeDocument(int row) {
+    try {
+      documents.get(row).destroy();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     }
   }
 
