@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.swing.JLabel;
 
 public class AppResources {
+  public static final int DURATION_STANDARD = 3000;
+
   public static final Color COLOR_SUCCESS = Color.BLUE;
   public static final Color COLOR_WARNING = Color.ORANGE;
   public static final Color COLOR_DANGER = Color.RED;
