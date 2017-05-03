@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import views.incoming_files.IncommingDocumentManagementView;
-import views.outgoing_files.OutgoingFilesView;
+import views.outgoing_files.OutgoingDocumentManagementView;
 import views.personal.PersonalView;
 import views.users_management.UsersManagementView;
 
@@ -32,7 +32,7 @@ public class MainView extends JPanel {
     add(tabMenu);
     addTab(new UsersManagementView(), USER_MANAGEMENT_LABEL, KeyEvent.VK_0);
     addTab(new IncommingDocumentManagementView(), INCOMING_FILE_LABEL, KeyEvent.VK_1);
-    addTab(new OutgoingFilesView(), OUTGOING_FILE_LABEL, KeyEvent.VK_2);
+    addTab(new OutgoingDocumentManagementView(), OUTGOING_FILE_LABEL, KeyEvent.VK_2);
     addTab(new PersonalView(), PERSONAL_LABEL, KeyEvent.VK_3);
   }
 

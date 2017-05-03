@@ -116,4 +116,9 @@ public class UserRecord {
     }
     return users;
   }
+
+  @Override
+  public String toString() {
+    return getFullName();
+  }
 }
