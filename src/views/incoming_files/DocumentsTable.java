@@ -61,6 +61,8 @@ public class DocumentsTable extends JTable {
   public boolean removeDocument(int row) {
     try {
       documents.get(row).destroy();
+      documents.remove(row);
+      refreshData();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();

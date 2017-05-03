@@ -22,6 +22,7 @@ public class DocumentsTable extends JTable {
     setHeaders();
     DefaultTableModel model = new DefaultTableModel(getContent(), getHeaders());
     setModel(model);
+    setEnabled(false);
   }
 
   public void addRow(DocumentRecord document) {
@@ -41,6 +42,8 @@ public class DocumentsTable extends JTable {
   public boolean removeDocument(int row) {
     try {
       documents.get(row).destroy();
+      documents.remove(row);
+      refreshData();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();
