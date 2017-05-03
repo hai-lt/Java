@@ -4,14 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import models.documents.Document;
 import models.users.User;
 import models.users.UserRecord;
+import system.RootSystem;
+import views.AppResources;
 
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -19,13 +24,14 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
-public class NewDocumentView extends JPanel {
+public abstract class NewDocumentView extends JPanel {
   private JPanel container;
   private JTextField txtSubject;
   private JTextField txtPathFile;
   private JComboBox cbSelectReceiver;
   private JTextArea txtListReceivers, txtContent;
   private JButton btnSave, btnChooseFile;
+  private JLabel lbStatus;
 
   /**
    * Create the panel.
@@ -50,6 +56,15 @@ public class NewDocumentView extends JPanel {
         if (fc.showOpenDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
           txtPathFile.setText(fc.getSelectedFile().toString());
         }
+      }
+    });
+
+    btnSave.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        createNewDocument();
+        afterSaveAction();
       }
     });
 
@@ -128,5 +143,45 @@ public class NewDocumentView extends JPanel {
     btnChooseFile = new JButton("Chọn file");
     btnChooseFile.setBounds(22, 300, 95, 25);
     container.add(btnChooseFile);
+
+    lbStatus = new JLabel("status");
+    lbStatus.setBounds(22, 373, 416, 15);
+    container.add(lbStatus);
   }
+
+  public void createNewDocument() {
+    if (txtListReceivers.getText().equals("")) {
+      AppResources.notifyMessage(lbStatus, "Chọn người nhận văn bản", AppResources.DURATION_STANDARD,
+          AppResources.COLOR_WARNING);
+      return;
+    }
+    String subject = txtSubject.getText();
+    if (subject.equals("")) {
+      AppResources.notifyMessage(lbStatus, "Nhập chủ đề của văn bản", AppResources.DURATION_STANDARD,
+          AppResources.COLOR_WARNING);
+      return;
+    }
+    String content = txtContent.getText();
+    if (content.equals("")) {
+      AppResources.notifyMessage(lbStatus, "Nhập nội dung của văn bản", AppResources.DURATION_STANDARD,
+          AppResources.COLOR_WARNING);
+      return;
+    }
+    HashMap<String, String> document = new HashMap<>();
+    document.put("content", content);
+    document.put("subject", subject);
+    document.put("user_code", RootSystem.getInstance().getCurrentUser().getCode());
+    document.put("src", txtPathFile.getText());
+    try {
+      new Document().create(document);
+      AppResources.notifyMessage(lbStatus, "Tạo văn bản thành công.", AppResources.DURATION_STANDARD,
+          AppResources.COLOR_SUCCESS);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      AppResources.notifyMessage(lbStatus, "Có lỗi xảy ra, không tạo được văn bản." + e.getMessage(),
+          AppResources.DURATION_STANDARD, AppResources.COLOR_WARNING);
+    }
+  }
+
+  protected abstract void afterSaveAction();
 }
