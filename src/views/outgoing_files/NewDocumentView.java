@@ -30,7 +30,7 @@ public abstract class NewDocumentView extends JPanel {
   private JTextField txtPathFile;
   private JComboBox cbSelectReceiver;
   private JTextArea txtListReceivers, txtContent;
-  private JButton btnSave, btnChooseFile;
+  private JButton btnSave, btnChooseFile, btnBack;
   private JLabel lbStatus;
 
   /**
@@ -63,8 +63,18 @@ public abstract class NewDocumentView extends JPanel {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        createNewDocument();
-        afterSaveAction();
+        if (createNewDocument()) {
+          afterSaveAction();
+        }
+      }
+    });
+
+    btnBack.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        clearView();
+        afterBackAction();
       }
     });
 
@@ -127,6 +137,10 @@ public abstract class NewDocumentView extends JPanel {
     btnSave.setBounds(355, 339, 83, 25);
     container.add(btnSave);
 
+    btnBack = new JButton("Hủy");
+    btnBack.setBounds(273, 339, 83, 25);
+    container.add(btnBack);
+
     JLabel lblNguoiNhan = new JLabel("Chọn người nhận");
     lblNguoiNhan.setBounds(22, 81, 128, 15);
     container.add(lblNguoiNhan);
@@ -149,39 +163,61 @@ public abstract class NewDocumentView extends JPanel {
     container.add(lbStatus);
   }
 
-  public void createNewDocument() {
+  public boolean createNewDocument() {
     if (txtListReceivers.getText().equals("")) {
       AppResources.notifyMessage(lbStatus, "Chọn người nhận văn bản", AppResources.DURATION_STANDARD,
           AppResources.COLOR_WARNING);
-      return;
+      return false;
     }
     String subject = txtSubject.getText();
     if (subject.equals("")) {
       AppResources.notifyMessage(lbStatus, "Nhập chủ đề của văn bản", AppResources.DURATION_STANDARD,
           AppResources.COLOR_WARNING);
-      return;
+      return false;
     }
     String content = txtContent.getText();
     if (content.equals("")) {
       AppResources.notifyMessage(lbStatus, "Nhập nội dung của văn bản", AppResources.DURATION_STANDARD,
           AppResources.COLOR_WARNING);
-      return;
+      return false;
+    }
+    String file = txtPathFile.getText();
+    if (file.equals("")) {
+      AppResources.notifyMessage(lbStatus, "Chọn file đính kèm.", AppResources.DURATION_STANDARD,
+          AppResources.COLOR_WARNING);
+      return false;
     }
     HashMap<String, String> document = new HashMap<>();
     document.put("content", content);
     document.put("subject", subject);
     document.put("user_code", RootSystem.getInstance().getCurrentUser().getCode());
-    document.put("src", txtPathFile.getText());
+    document.put("src", file);
     try {
       new Document().create(document);
       AppResources.notifyMessage(lbStatus, "Tạo văn bản thành công.", AppResources.DURATION_STANDARD,
           AppResources.COLOR_SUCCESS);
+      clearView();
+      return true;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
       AppResources.notifyMessage(lbStatus, "Có lỗi xảy ra, không tạo được văn bản." + e.getMessage(),
           AppResources.DURATION_STANDARD, AppResources.COLOR_WARNING);
+      return false;
     }
   }
+
+  private void clearView() {
+    txtContent.setText("");
+    txtListReceivers.setText("");
+    txtPathFile.setText("");
+    txtSubject.setText("");
+  }
+
+  public JButton getBtnBack() {
+    return btnBack;
+  }
+
+  protected abstract void afterBackAction();
 
   protected abstract void afterSaveAction();
 }
