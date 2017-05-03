@@ -1,11 +1,10 @@
 package models.documents;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.HashMap;
 
 import hailt.models.ObjectRecord;
-import models.document_user.DocumentUser;
-import models.document_user.DocumentUserRecord;
 import models.users.User;
 import models.users.UserRecord;
 
@@ -14,6 +13,12 @@ public class DocumentRecord {
 
   public DocumentRecord(ObjectRecord object) {
     setAttributes(object.getValues());
+  }
+
+  public void destroy() throws SQLException {
+    HashMap<String, String> record = new HashMap<>();
+    record.put("code", getCode());
+    new Document().destroy(record);
   }
 
   public DocumentRecord(String... strings) {
