@@ -3,6 +3,8 @@ package models.users;
 import java.util.ArrayList;
 
 import hailt.models.ObjectRecord;
+import models.documents.Document;
+import models.documents.DocumentRecord;
 
 public class UserRecord {
   private String code, fullName, phone, birdthDate, level;
@@ -27,6 +29,12 @@ public class UserRecord {
     accessRole = strings[7];
     status = strings[8];
     avatar = strings[9];
+  }
+
+  public ArrayList<DocumentRecord> receiveDocuments() {
+    return DocumentRecord.convertFrom(new Document().query("SELECT * FROM document"
+        + " INNER JOIN document_user on document_user.document_code = document.code"
+        + " INNER JOIN user on user.code = document_user.user_code" + " WHERE document_user.user_code = " + getCode()));
   }
 
   public String getCode() {
