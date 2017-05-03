@@ -53,8 +53,8 @@ public class IncommingDocumentManagementView extends JPanel {
         int row = tb.getSelectedRow();
         int col = tb.getSelectedColumn();
 
-        if (row == tb.getHeaders().size() - 1) {
-          destroyDocument();
+        if (col == tb.getHeaders().size() - 1) {
+          tb.removeDocument(row);
           return;
         }
         DocumentRecord document = tb.getDocuments().get(row);
@@ -75,10 +75,6 @@ public class IncommingDocumentManagementView extends JPanel {
         showDocumentDetailView();
       }
     };
-  }
-
-  private void destroyDocument() {
-
   }
 
   private void showDocumentDetailView() {
