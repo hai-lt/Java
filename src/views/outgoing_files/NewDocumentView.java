@@ -4,11 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import models.users.User;
+import models.users.UserRecord;
+
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
@@ -40,10 +46,21 @@ public class NewDocumentView extends JPanel {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("open file");
+        JFileChooser fc = new JFileChooser();
+        if (fc.showOpenDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
+          txtPathFile.setText(fc.getSelectedFile().toString());
+        }
       }
     });
 
+  }
+
+  private Vector<UserRecord> getAllUsers() {
+    Vector<UserRecord> users = new Vector();
+    for (UserRecord user : UserRecord.convertFrom(new User().all())) {
+      users.add(user);
+    }
+    return users;
   }
 
   private void setUi() {
@@ -56,8 +73,16 @@ public class NewDocumentView extends JPanel {
     lblCreateDoc.setBounds(12, 25, 426, 15);
     container.add(lblCreateDoc);
 
-    cbSelectReceiver = new JComboBox();
+    cbSelectReceiver = new JComboBox(getAllUsers());
     cbSelectReceiver.setBounds(247, 76, 194, 24);
+    cbSelectReceiver.setAutoscrolls(true);
+    cbSelectReceiver.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        txtListReceivers.setText(txtListReceivers.getText() + cbSelectReceiver.getSelectedItem() + ", ");
+      }
+    });
     container.add(cbSelectReceiver);
 
     JLabel lbSubject = new JLabel("Chủ đề");
