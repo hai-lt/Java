@@ -158,7 +158,8 @@ public abstract class NewDocumentView extends JPanel {
     btnChooseFile.setBounds(22, 300, 95, 25);
     container.add(btnChooseFile);
 
-    lbStatus = new JLabel("status");
+    lbStatus = new JLabel("Thông báo");
+    lbStatus.setForeground(AppResources.COLOR_SUCCESS);
     lbStatus.setBounds(22, 373, 416, 15);
     container.add(lbStatus);
   }
