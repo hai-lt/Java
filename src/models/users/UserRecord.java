@@ -32,9 +32,20 @@ public class UserRecord {
   }
 
   public ArrayList<DocumentRecord> receiveDocuments() {
-    return DocumentRecord.convertFrom(new Document().query("SELECT * FROM document"
-        + " INNER JOIN document_user on document_user.document_code = document.code"
-        + " INNER JOIN user on user.code = document_user.user_code" + " WHERE document_user.user_code = " + getCode()));
+    return DocumentRecord.convertFrom(new Document()
+        .query("SELECT * FROM document" + " INNER JOIN document_user on document_user.document_code = document.code"
+            + " INNER JOIN user on user.code = document_user.user_code" + " WHERE document_user.user_code = '"
+            + getCode() + "'"));
+  }
+
+  public ArrayList<DocumentRecord> receiveDocuments(String condition) {
+    String query = "SELECT * FROM document" + " INNER JOIN document_user on document_user.document_code = document.code"
+        + " INNER JOIN user on user.code = document_user.user_code" + " WHERE document_user.user_code = '" + getCode()
+        + "'";
+    if (condition != null && !condition.equals("")) {
+      query += " AND " + condition;
+    }
+    return DocumentRecord.convertFrom(new Document().query(query));
   }
 
   public String getCode() {
