@@ -20,9 +20,14 @@ public class DocumentsTable extends JTable {
     super();
     this.documents = documents;
     setHeaders();
-    DefaultTableModel model = new DefaultTableModel(getContent(), getHeaders());
+    DefaultTableModel model = new DefaultTableModel(getContent(), getHeaders()) {
+
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        return false;
+      }
+    };
     setModel(model);
-    setEnabled(false);
   }
 
   public void addRow(DocumentRecord document) {
