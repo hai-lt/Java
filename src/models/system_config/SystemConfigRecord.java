@@ -24,7 +24,7 @@ public class SystemConfigRecord {
 
   private SystemConfigRecord() {
     try {
-      setAttributes(new SystemConfig().all().get(0).getValues());
+      setAttributes(getRecord().getValues());
     } catch (Exception e) {
       initializeSystemConfig();
     }
@@ -33,10 +33,23 @@ public class SystemConfigRecord {
   private void initializeSystemConfig() {
     try {
       new SystemConfig().create(new HashMap<>());
-      setAttributes(new SystemConfig().all().get(0).getValues());
+      setAttributes(getRecord().getValues());
     } catch (SQLException e1) {
       System.out.println(e1.getMessage());
     }
+  }
+
+  private ObjectRecord getRecord() {
+    try {
+      return new SystemConfig().all().get(0);
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public SystemConfigRecord reload() {
+    setAttributes(getRecord().getValues());
+    return instance;
   }
 
   public void setAttributes(String... strings) {
