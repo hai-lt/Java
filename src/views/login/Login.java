@@ -3,11 +3,17 @@ package views.login;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import hailt.models.ObjectRecord;
+import models.users.User;
+import models.users.UserRecord;
+import system.RootSystem;
+import views.AppResources;
 import views.main.MainView;
 
 import javax.swing.JLabel;
@@ -68,6 +74,8 @@ public class Login extends JFrame {
       showMainView();
       return;
     }
+    AppResources.notifyMessage(lbStatus, "Vui lòng kiểm tra lại mã nhân viên và mật khẩu!",
+        AppResources.DURATION_STANDARD, AppResources.COLOR_WARNING);
   }
 
   private void showMainView() {
@@ -76,7 +84,25 @@ public class Login extends JFrame {
   }
 
   private boolean loginSuccess() {
-    return true;
+    String userCode = txtUserCode.getText();
+    if (userCode.equals("")) {
+      return false;
+    }
+    String password = txtPassword.getText();
+    if (password.equals("")) {
+      return false;
+    }
+    HashMap<String, String> record = new HashMap<>();
+    record.put("code", userCode);
+    record.put("password", password);
+    try {
+      ObjectRecord objectRecord = new User().findBy(record);
+      UserRecord user = new UserRecord(objectRecord);
+      RootSystem.getInstance().setCurrentUser(user);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
 
   private void setUi() {
