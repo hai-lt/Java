@@ -1,5 +1,6 @@
 package views.incoming_files;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -21,7 +22,13 @@ public class DocumentsTable extends JTable {
     super();
     this.documents = documents;
     setHeaders();
-    DefaultTableModel model = new DefaultTableModel(getContent(), getHeaders());
+    DefaultTableModel model = new DefaultTableModel(getContent(), getHeaders()) {
+
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        return false;
+      }
+    };
     setModel(model);
   }
 
@@ -55,6 +62,18 @@ public class DocumentsTable extends JTable {
     DefaultTableModel model = new DefaultTableModel(getContent(), getHeaders());
     setModel(model);
     model.fireTableDataChanged();
+  }
+
+  public boolean removeDocument(int row) {
+    try {
+      documents.get(row).destroy();
+      documents.remove(row);
+      refreshData();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 
   public Vector<Vector<String>> getContent() {

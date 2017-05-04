@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import models.documents.Document;
+import models.documents.DocumentRecord;
 import models.users.User;
 import models.users.UserRecord;
 import system.RootSystem;
@@ -32,6 +34,7 @@ public abstract class NewDocumentView extends JPanel {
   private JTextArea txtListReceivers, txtContent;
   private JButton btnSave, btnChooseFile, btnBack;
   private JLabel lbStatus;
+  private ArrayList<UserRecord> receivers;
 
   /**
    * Create the panel.
@@ -78,6 +81,14 @@ public abstract class NewDocumentView extends JPanel {
       }
     });
 
+    cbSelectReceiver.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        addReceiverView((UserRecord) cbSelectReceiver.getSelectedItem());
+      }
+    });
+
   }
 
   private Vector<UserRecord> getAllUsers() {
@@ -101,13 +112,6 @@ public abstract class NewDocumentView extends JPanel {
     cbSelectReceiver = new JComboBox(getAllUsers());
     cbSelectReceiver.setBounds(247, 76, 194, 24);
     cbSelectReceiver.setAutoscrolls(true);
-    cbSelectReceiver.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        txtListReceivers.setText(txtListReceivers.getText() + cbSelectReceiver.getSelectedItem() + ", ");
-      }
-    });
     container.add(cbSelectReceiver);
 
     JLabel lbSubject = new JLabel("Chủ đề");
@@ -194,7 +198,12 @@ public abstract class NewDocumentView extends JPanel {
     document.put("user_code", RootSystem.getInstance().getCurrentUser().getCode());
     document.put("src", file);
     try {
-      new Document().create(document);
+      Document doc = new Document();
+      doc.create(document);
+      DocumentRecord documentRecord = new DocumentRecord(doc.findBy(document));
+      for (UserRecord user : receivers) {
+        documentRecord.addReceiver(user);
+      }
       AppResources.notifyMessage(lbStatus, "Tạo văn bản thành công.", AppResources.DURATION_STANDARD,
           AppResources.COLOR_SUCCESS);
       clearView();
@@ -209,13 +218,33 @@ public abstract class NewDocumentView extends JPanel {
 
   private void clearView() {
     txtContent.setText("");
-    txtListReceivers.setText("");
+    clearReceiversView();
     txtPathFile.setText("");
     txtSubject.setText("");
   }
 
   public JButton getBtnBack() {
     return btnBack;
+  }
+
+  private void addReceiverView(UserRecord user) {
+    if (receivers == null) {
+      receivers = new ArrayList<>();
+    }
+    if (receivers.contains(user)) {
+      return;
+    }
+    receivers.add(user);
+    String oldReceivers = txtListReceivers.getText();
+    if (!oldReceivers.equals("")) {
+      oldReceivers += ", ";
+    }
+    txtListReceivers.setText(oldReceivers + user.getFullName());
+  }
+
+  private void clearReceiversView() {
+    receivers.clear();
+    txtListReceivers.setText("");
   }
 
   protected abstract void afterBackAction();
