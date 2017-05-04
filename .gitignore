@@ -14,5 +14,5 @@ hs_err_pid*
 .classpath
 database.conf
 /bin/
-
 *.sql
+/target/

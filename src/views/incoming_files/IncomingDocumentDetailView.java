@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import hailt.models.BaseModel;
 import models.documents.DocumentRecord;
 import models.users.UserRecord;
 
@@ -78,23 +79,23 @@ public class IncomingDocumentDetailView extends JPanel {
     container = new JPanel(null);
     container.setPreferredSize(new Dimension(500, 300));
 
-    JLabel lbSenderTitle = new JLabel("Người gửi:");
+    JLabel lbSenderTitle = new JLabel("NgÆ°á»�i gá»­i:");
     lbSenderTitle.setBounds(29, 39, 79, 15);
     container.add(lbSenderTitle);
 
-    JLabel lbReceiversTitle = new JLabel("Ngời nhận:");
+    JLabel lbReceiversTitle = new JLabel("Ngá»�i nháº­n:");
     lbReceiversTitle.setBounds(184, 39, 84, 15);
     container.add(lbReceiversTitle);
 
-    JLabel lbSubjectTitle = new JLabel("Chủ đề:");
+    JLabel lbSubjectTitle = new JLabel("Chá»§ Ä‘á»�:");
     lbSubjectTitle.setBounds(29, 66, 59, 15);
     container.add(lbSubjectTitle);
 
-    JLabel lb = new JLabel("Nội dung");
+    JLabel lb = new JLabel("Ná»™i dung");
     lb.setBounds(29, 103, 70, 15);
     container.add(lb);
 
-    btnBack = new JButton("Trở về");
+    btnBack = new JButton("Trá»Ÿ vá»�");
     btnBack.setBounds(347, 263, 91, 25);
     container.add(btnBack);
 
@@ -114,15 +115,15 @@ public class IncomingDocumentDetailView extends JPanel {
     container.add(txtPathDocument);
     txtPathDocument.setColumns(10);
 
-    lbSubject = new JLabel("Răng cũng được");
+    lbSubject = new JLabel("RÄƒng cÅ©ng Ä‘Æ°á»£c");
     lbSubject.setBounds(117, 66, 302, 15);
     container.add(lbSubject);
 
-    lbSender = new JLabel("Tấn Hải");
+    lbSender = new JLabel("Táº¥n Háº£i");
     lbSender.setBounds(102, 39, 91, 15);
     container.add(lbSender);
 
-    lbReceiver = new JLabel("Tấn Hải");
+    lbReceiver = new JLabel("Táº¥n Háº£i");
     lbReceiver.setBounds(274, 39, 145, 15);
     container.add(lbReceiver);
 
