@@ -141,5 +141,8 @@ public class Login extends JFrame {
     lbStatus = new JLabel("");
     lbStatus.setBounds(62, 125, 305, 15);
     container.add(lbStatus);
+
+    // hide element
+    chckbxRememberMe.setVisible(false);
   }
 }
