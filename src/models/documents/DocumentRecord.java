@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import hailt.models.ObjectRecord;
+import models.document_user.DocumentUser;
 import models.users.User;
 import models.users.UserRecord;
 
@@ -19,6 +20,14 @@ public class DocumentRecord {
     HashMap<String, String> record = new HashMap<>();
     record.put("code", getCode());
     new Document().destroy(record);
+  }
+
+  public boolean addReceiver(UserRecord user) throws SQLException {
+    HashMap<String, String> record = new HashMap<>();
+    record.put("user_code", user.getCode());
+    record.put("document_code", getCode());
+    new DocumentUser().create(record);
+    return true;
   }
 
   public DocumentRecord(String... strings) {
