@@ -28,7 +28,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import com.toedter.calendar.JDateChooser;
+
 public class PersonalView extends JPanel implements ActionListener{
+	
+	public static final String[] THONGTINCANHAN = { "manguoidung", "hoten", "matkhau", "ngaysinh", "capbac", "chucvu",
+			"trangthai", "quyenhan", "path"};
+	
   public PersonalView() {
     super();
     add(new JLabel("Cá Nhân"));
@@ -43,7 +49,8 @@ public class PersonalView extends JPanel implements ActionListener{
 	private JDateChooser dateChooser;
 	private Connection mConnection;
 	private PreparedStatement mPrepareStatement;
-	private User user;
+	
+	/*private User user;
 	
 	public UserTab(MainScreen main, User user){
 		this.user = user;
@@ -52,7 +59,7 @@ public class PersonalView extends JPanel implements ActionListener{
 		} catch (Exception e) {
 			System.out.println("_MainScreen_ Kết nối thất bại.");
 		}
-	}
+	}*/
 	
 	public void createUserInformationUI(JPanel tabPanel) {
 		// tạo UI cho quản lý thông tin cá nhân.
@@ -62,27 +69,28 @@ public class PersonalView extends JPanel implements ActionListener{
 		// dòng chứa họ tên
 		tfUserName = new JTextField();
 		createRow(tabPanel, new JLabel("Họ tên:"), 30, 70, 100, 30, tfUserName, 150, 70, 150, 30,
-				Login.THONGTINCANHAN[1]);
+				THONGTINCANHAN[1]);
 
 		// dòng chứa mã người dùng
 		tfUserCode = new JTextField();
 		createRow(tabPanel, new JLabel("Mã người dùng:"), 30, 110, 100, 30, tfUserCode, 150, 110, 150, 30,
-				Login.THONGTINCANHAN[0]);
+				THONGTINCANHAN[0]);
 
 		// dòng chứa ngày sinh
 		JLabel lbBirth = new JLabel("Ngày sinh:");
 		lbBirth.setBounds(30, 150, 100, 30);
 		tabPanel.add(lbBirth);
-		// tạo 1 cái datechooser
+		
+//		 tạo 1 cái datechooser
 		dateChooser = new JDateChooser();
 		dateChooser.setBounds(150, 150, 150, 30);
-		// String d = "2017-05-14";
+		/*String d = "2017-05-14";
 		try {
 			dateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(user.getBirth()));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		dateChooser.setEnabled(false);
 		// dateChooser.setDate(arg0);
 		tabPanel.add(dateChooser);
@@ -90,12 +98,12 @@ public class PersonalView extends JPanel implements ActionListener{
 		// dòng chứa chức vụ
 		tfUserWork = new JTextField();
 		createRow(tabPanel, new JLabel("Chức vụ:"), 30, 190, 100, 30, tfUserWork, 150, 190, 150, 30,
-				Login.THONGTINCANHAN[5]);
+				THONGTINCANHAN[5]);
 
 		// dòng chứa cấp bậc
 		tfUserRank = new JTextField();
 		createRow(tabPanel, new JLabel("Cấp bậc:"), 30, 230, 80, 30, tfUserRank, 150, 230, 150, 30,
-				Login.THONGTINCANHAN[4]);
+				THONGTINCANHAN[4]);
 		// tạo button cập nhật thông tin cá nhân
 		btnUdapteUserInfo = createButton("Cập nhật thông tin", 30, 280, 270, 30);
 		tabPanel.add(btnUdapteUserInfo);
@@ -104,12 +112,14 @@ public class PersonalView extends JPanel implements ActionListener{
 		// Tạo button thay đổi ảnh đại diện SIZE 32x32.
 		btnChangeAvatar = new JButton();
 		createAvatarButton(tabPanel, btnChangeAvatar, 521, 141, 32, 32, "/Image/camera32.png");
-		btnChangeAvatar.addActionListener(UserTab.this);
+		btnChangeAvatar.addActionListener(PersonalView.this);
 
 		// Tạo image avatar size 150x150
 		lbAvatar = new JLabel();
+		
 		lbAvatar.setBounds(405, 25, 150, 150);
-		if (user.getPath() != null) {
+		
+		/*if (user.getPath() != null) {
 			showAvatar(lbAvatar, user.getPath());
 		} else {
 			// avatar mặc định
@@ -118,7 +128,7 @@ public class PersonalView extends JPanel implements ActionListener{
 		// showAvatar(avatarLabel, PATH[0]);
 		Border avaBorder = BorderFactory.createLineBorder(Color.RED, 2);
 		lbAvatar.setBorder(avaBorder);
-		tabPanel.add(lbAvatar);
+		tabPanel.add(lbAvatar);*/
 
 		// dòng mật khẩu cũ
 		pfOldPass = new JPasswordField();
@@ -174,7 +184,7 @@ public class PersonalView extends JPanel implements ActionListener{
 		panel.add(label);
 		textfield.setBounds(x2, y2, width2, height2);
 		textfield.setEditable(false);
-		switch (info) {
+		/*switch (info) {
 		case "hoten":
 			textfield.setText(user.getUserName());
 			break;
@@ -187,7 +197,7 @@ public class PersonalView extends JPanel implements ActionListener{
 		default: // "capbac"
 			textfield.setText(user.getRank());
 			break;
-		}
+		}*/
 		panel.add(textfield);
 	}
 
@@ -201,7 +211,7 @@ public class PersonalView extends JPanel implements ActionListener{
 		}
 	}
 
-	private int updatePassword() {
+	/*private int updatePassword() {
 		int key = 0;
 		if (pfOldPass.getText().trim().equals(user.getPassword())) {
 			if (pfNewPass.getText().trim().equals(pfVerifyPw.getText().trim())) {
@@ -264,7 +274,7 @@ public class PersonalView extends JPanel implements ActionListener{
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Không thể đổi ảnh đại diện");
 		}
-	}
+	}*/
 
 	private boolean checkImage(String path) {
 		int size = path.length();
@@ -274,7 +284,7 @@ public class PersonalView extends JPanel implements ActionListener{
 	private void setEditState(String title, boolean state) {
 		btnUdapteUserInfo.setText(title);
 		tfUserName.setEditable(state);
-		dateChooser.setEnabled(state);
+//		dateChooser.setEnabled(state);
 		tfUserWork.setEditable(state);
 		tfUserRank.setEditable(state);
 		btnChangeAvatar.setVisible(state);
@@ -290,41 +300,7 @@ public class PersonalView extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() == btnUdapteUserInfo) {
-			if (!tfUserName.isEditable()) {
-				setEditState("Thay đổi", true);
-			} else { // update infomation
-				if (updateInformation() != 0) {
-					setEditState("Cập nhật thông tin", false);
-				} else {
-					JOptionPane.showMessageDialog(null, "Cập nhật không hợp lệ, vui lòng thực hiện lại!");
-				}
-			}
-		} else if (e.getSource() == btnChangeAvatar) {
-			// tạo filechooser
-			int select = chooseImage.showOpenDialog(PersonalView.this);
-			if (select == JFileChooser.APPROVE_OPTION) {
-				String path = chooseImage.getSelectedFile().getPath();
-				if (checkImage(path)) {
-					copyPathAndStoreImage(lbAvatar, path,
-							Login.PATHSTORE + "/" + "Info " + user.getUserName() + "/" + user.getUserName() + ".png");
-					user.setPath(
-							Login.PATHSTORE + "/" + "Info " + user.getUserName() + "/" + user.getUserName() + ".png");
-				} else {
-					JOptionPane.showMessageDialog(null, "File không hợp lệ, vui lòng thực hiện lại!");
-				}
-			}
-		} else if (e.getSource() == btnUpdatePass) {
-			if (!pfOldPass.isEditable()) {
-				setEditPasswordState("Đổi mật khẩu", true);
-			} else {
-				if (updatePassword() != 0) {
-					setEditPasswordState("Cập nhật mật khẩu", false);
-				} else {
-					JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
-				}
-			}
-		}
+		
 	}
   
 }
