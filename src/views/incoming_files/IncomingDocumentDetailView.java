@@ -101,6 +101,7 @@ public class IncomingDocumentDetailView extends JPanel {
     txtContent = new JTextArea();
     txtContent.setText("Content");
     txtContent.setBounds(117, 103, 302, 108);
+    txtContent.setEditable(false);
     container.add(txtContent);
 
     lblFile = new JLabel("File");
