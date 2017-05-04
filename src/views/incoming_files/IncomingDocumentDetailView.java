@@ -134,7 +134,9 @@ public class IncomingDocumentDetailView extends JPanel {
     for (UserRecord user : document.receivers()) {
       receivers += user.getFullName() + ", ";
     }
-    receivers = receivers.substring(0, receivers.length() - 2);
+    if (!receivers.equals("")) {
+      receivers = receivers.substring(0, receivers.length() - 2);
+    }
     lbReceiver.setText(receivers);
     lbSubject.setText(document.getSubject());
     txtContent.setText(document.getContent());

@@ -3,6 +3,7 @@ package views.incoming_files;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 
 import models.documents.Document;
 import models.documents.DocumentRecord;
+import system.RootSystem;
 
 public class ListDocumentView extends JPanel {
   private JTextField txtDocument, txtSender;
@@ -44,6 +46,10 @@ public class ListDocumentView extends JPanel {
     return tbDocuments;
   }
 
+  private ArrayList<DocumentRecord> getDocuments(String condition) {
+    return RootSystem.getInstance().getCurrentUser().receiveDocuments(condition);
+  }
+
   public void setTbDocuments(DocumentsTable tbDocuments) {
     this.tbDocuments = tbDocuments;
   }
@@ -54,24 +60,18 @@ public class ListDocumentView extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         String subject = txtDocument.getText().trim();
-        String userCode = txtSender.getText().trim();
-        String conditions = "";
-        if (!userCode.equals("")) {
-          conditions += " INNER JOIN user ON document.user_code = user.code" + " WHERE user.full_name LIKE '%"
-              + userCode + "%'";
+        String username = txtSender.getText().trim();
+        String condition = "";
+        if (!username.equals("")) {
+          condition += " user.full_name LIKE '%" + username + "%'";
         }
         if (!subject.equals("")) {
-          if (!conditions.equals("")) {
-            conditions += " AND ";
+          if (!condition.equals("")) {
+            condition += " AND ";
           }
-          conditions += "WHERE subject LIKE '%" + subject + "%'";
+          condition += " subject LIKE '%" + subject + "%'";
         }
-        if (!conditions.equals("")) {
-          tbDocuments.setDocuments(
-              DocumentRecord.convertFrom(new Document().query("select distinct * from document " + conditions)));
-        } else {
-          tbDocuments.setDocuments(DocumentRecord.convertFrom(new Document().all()));
-        }
+        tbDocuments.setDocuments(RootSystem.getInstance().getCurrentUser().receiveDocuments(condition));
         tbDocuments.refreshData();
       }
     };
