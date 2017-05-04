@@ -37,7 +37,7 @@ public class ListDocumentView extends JPanel {
     filterView.add(btnSearch);
     add(filterView, BorderLayout.NORTH);
 
-    tbDocuments = new DocumentsTable(DocumentRecord.convertFrom(new Document().all()));
+    tbDocuments = new DocumentsTable(RootSystem.getInstance().getCurrentUser().receiveDocuments());
     JScrollPane scrollPane = new JScrollPane(tbDocuments);
     add(scrollPane, BorderLayout.CENTER);
   }
