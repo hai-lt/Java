@@ -81,6 +81,14 @@ public abstract class NewDocumentView extends JPanel {
       }
     });
 
+    cbSelectReceiver.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        addReceiverView((UserRecord) cbSelectReceiver.getSelectedItem());
+      }
+    });
+
   }
 
   private Vector<UserRecord> getAllUsers() {
@@ -104,13 +112,6 @@ public abstract class NewDocumentView extends JPanel {
     cbSelectReceiver = new JComboBox(getAllUsers());
     cbSelectReceiver.setBounds(247, 76, 194, 24);
     cbSelectReceiver.setAutoscrolls(true);
-    cbSelectReceiver.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        addReceiverView((UserRecord) cbSelectReceiver.getSelectedItem());
-      }
-    });
     container.add(cbSelectReceiver);
 
     JLabel lbSubject = new JLabel("Chủ đề");
