@@ -1,14 +1,19 @@
 package system;
 
+import models.system_config.SystemConfigRecord;
 import models.users.User;
 import models.users.UserRecord;
 
 public class RootSystem {
   private static RootSystem instance;
   private UserRecord currentUser;
-  
+
   private RootSystem() {
     setCurrentUser(new UserRecord(new User().all().get(0)));
+  }
+
+  public SystemConfigRecord getSystemConfigRecord() {
+    return SystemConfigRecord.getInstance();
   }
 
   public static RootSystem getInstance() {
@@ -31,7 +36,5 @@ public class RootSystem {
   public void setCurrentUser(UserRecord currentUser) {
     this.currentUser = currentUser;
   }
-  
-  
-  
+
 }
