@@ -64,4 +64,8 @@ public class SystemConfigRecord {
     this.rememberUser = rememberUser;
   }
 
+  public void update(HashMap<String, String> attributes) throws SQLException {
+    new SystemConfig().update(attributes, null);
+  }
+
 }
