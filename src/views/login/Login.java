@@ -99,8 +99,19 @@ public class Login extends JFrame {
       ObjectRecord objectRecord = new User().findBy(record);
       UserRecord user = new UserRecord(objectRecord);
       RootSystem.getInstance().setCurrentUser(user);
+      // update remember
+      String remember_user;
+      if (chckbxRememberMe.isSelected()) {
+        remember_user = user.getCode();
+      } else {
+        remember_user = "";
+      }
+      HashMap<String, String> attributes = new HashMap<>();
+      attributes.put("remember_user", remember_user);
+      RootSystem.getInstance().getSystemConfigRecord().update(attributes);
       return true;
     } catch (Exception e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -142,7 +153,5 @@ public class Login extends JFrame {
     lbStatus.setBounds(62, 125, 305, 15);
     container.add(lbStatus);
 
-    // hide element
-    chckbxRememberMe.setVisible(false);
   }
 }
