@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import models.documents.Document;
 import models.documents.DocumentRecord;
+import system.RootSystem;
 
 public class OutgoingDocumentsView extends JPanel {
   private JTextField txtDocument, txtReceivers;
@@ -41,7 +42,7 @@ public class OutgoingDocumentsView extends JPanel {
     pnNew.add(btnNew, BorderLayout.WEST);
     add(pnNew, BorderLayout.CENTER);
 
-    tbDocuments = new DocumentsTable(DocumentRecord.convertFrom(new Document().all()));
+    tbDocuments = new DocumentsTable(RootSystem.getInstance().getCurrentUser().getSentDocuments());
     JScrollPane scrollPane = new JScrollPane(tbDocuments);
     add(scrollPane, BorderLayout.SOUTH);
   }

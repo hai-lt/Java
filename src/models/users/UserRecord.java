@@ -128,6 +128,10 @@ public class UserRecord {
     this.avatar = avatar;
   }
 
+  public ArrayList<DocumentRecord> getSentDocuments() {
+    return DocumentRecord.convertFrom(new Document().all("user_code = '" + getCode() + "'"));
+  }
+
   public static ArrayList<UserRecord> convertFrom(ArrayList<ObjectRecord> records) {
     ArrayList<UserRecord> users = new ArrayList<>();
     for (ObjectRecord objectRecord : records) {
