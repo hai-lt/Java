@@ -57,6 +57,15 @@ public class Login extends JFrame {
     setBounds(100, 100, 450, 300);
     setUi();
     setEvent();
+    new Thread(new Runnable() {
+
+      @Override
+      public void run() {
+        if (isLogined()) {
+          showMainView();
+        }
+      }
+    }).start();
   }
 
   private void setEvent() {
@@ -67,6 +76,19 @@ public class Login extends JFrame {
         login();
       }
     });
+  }
+
+  private boolean isLogined() {
+    String userCode = RootSystem.getInstance().getSystemConfigRecord().getRememberUser();
+    if (userCode.equals("")) {
+      return false;
+    }
+    try {
+      RootSystem.getInstance().setCurrentUser(new UserRecord(new User().all("code = '" + userCode + "'").get(0)));
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
 
   private void login() {
