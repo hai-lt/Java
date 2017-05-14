@@ -91,7 +91,7 @@ public class Login extends JFrame {
     }
   }
 
-  private void login() {
+  public void login() {
     if (loginSuccess()) {
       showMainView();
       return;
@@ -101,7 +101,8 @@ public class Login extends JFrame {
   }
 
   private void showMainView() {
-    MainView.createUi(new MainView());
+    MainView mainView = new MainView();
+    mainView.setMainFrame(MainView.createUi(new MainView()));
     dispose();
   }
 
