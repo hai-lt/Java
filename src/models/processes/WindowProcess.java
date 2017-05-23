@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class WindowProcess extends ProcessInfo {
   public final static String[] TITLES = { "Session", "Status", "Name", "Pid",
-      "%Cpu", "Mem(kb)" };
+      "Mem(kb)" };
   private static final int POSITION_USER = 2;
   private static final int POSITION_STATUS = 3;
   private static final int POSITION_PID = 1;
@@ -49,7 +49,6 @@ public class WindowProcess extends ProcessInfo {
     value.add(getStatus());
     value.add(getName());
     value.add(String.valueOf(getId()));
-    value.add(String.valueOf(getCpu()));
     value.add(String.valueOf(getMem()));
     return value;
   }
