@@ -1,5 +1,6 @@
 package models.processes;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class WindowProcess extends ProcessInfo {
@@ -31,8 +32,8 @@ public class WindowProcess extends ProcessInfo {
     float mem = Float.parseFloat(memoryString[0]);
     ;
     if (memoryString.length > 1) {
-      mem = (float) (mem * Math.pow(10, memoryString[1].length()) + Float
-          .parseFloat(memoryString[1]));
+      mem = (float) (mem * Math.pow(10, memoryString[1].length())
+          + Float.parseFloat(memoryString[1]));
     }
     setAttributes(user, status, name, id, 0, mem);
   }
@@ -57,5 +58,20 @@ public class WindowProcess extends ProcessInfo {
     WindowProcess windowProcess = new WindowProcess();
     windowProcess.setAttributes(string);
     return windowProcess;
+  }
+
+  @Override
+  public String toString() {
+    ArrayList<String> attributes = new ArrayList<>();
+    attributes.add(POSITION_USER, getUser());
+    attributes.add(POSITION_PID, getId() + "");
+    attributes.add(POSITION_NAME, getName());
+    attributes.add(POSITION_STATUS, getStatus());
+    attributes.add(POSITION_USER, getUser());
+    String string = "";
+    for (String e : attributes) {
+      string += e;
+    }
+    return string;
   }
 }
