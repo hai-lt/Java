@@ -24,7 +24,6 @@ public class WindowProcess extends ProcessInfo {
 
   public WindowProcess(String string) {
     String[] values = string.split(" ");
-    System.out.println(string);
     String user = values[POSITION_USER];
     String status = values[POSITION_STATUS];
     String name = values[POSITION_NAME];
