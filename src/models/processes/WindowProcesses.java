@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class WindowProcesses extends ProcessesManagement {
+  public static final int MAX_ELEMENTS = 6;
   private final String GET_LIST_PROCESSES_COMMAND = "tasklist ";
 
   public WindowProcesses(ArrayList<ProcessInfo> processes) {
@@ -23,14 +24,22 @@ public class WindowProcesses extends ProcessesManagement {
   public ArrayList<ProcessInfo> loadProcesses() {
     try {
       Process p = Runtime.getRuntime().exec(getListProcessesCommand());
-      BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+      BufferedReader input = new BufferedReader(new InputStreamReader(
+          p.getInputStream()));
       String line;
       processes.clear();
-      // Remove 2 first lines which is the titles of the processes in Window OS
+      // Remove 4 first lines which is the titles of the processes in
+      // Window OS
+      input.readLine();
+      input.readLine();
       input.readLine();
       input.readLine();
       while ((line = input.readLine()) != null) {
-        processes.add(new WindowProcess(breeze(line)));
+        line = breeze(line);
+        if (line.split(" ").length > WindowProcesses.MAX_ELEMENTS) {
+          continue;
+        }
+        processes.add(new WindowProcess(line));
       }
       input.close();
       return processes;
@@ -52,4 +61,5 @@ public class WindowProcesses extends ProcessesManagement {
     }
     return new WindowProcesses(processes);
   }
+
 }
