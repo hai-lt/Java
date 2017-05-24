@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class WindowProcess extends ProcessInfo {
-  public final static String[] TITLES = { "Session", "Status", "Name", "Pid",
+  public final static String[] TITLES = { "Pid", "Status", "Name", "Session",
       "Mem(kb)" };
   private static final int POSITION_USER = 2;
   private static final int POSITION_STATUS = 3;
@@ -46,10 +46,10 @@ public class WindowProcess extends ProcessInfo {
   @Override
   public Vector<String> toVector() {
     Vector<String> value = new Vector<>();
-    value.add(getUser());
+    value.add(String.valueOf(getId()));
     value.add(getStatus());
     value.add(getName());
-    value.add(String.valueOf(getId()));
+    value.add(getUser());
     value.add(String.valueOf(getMem()));
     return value;
   }
