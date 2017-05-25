@@ -71,8 +71,7 @@ public abstract class ProcessesPanel extends JPanel {
         if (rowSelected > -1) {
           long pid = Long.parseLong((String) tbProcesses.getValueAt(rowSelected, 0));
           if (kill(pid)) {
-            tbProcesses.getProcessesManagement().loadProcesses();
-            tbProcesses.refreshData();
+            refreshProcesses();
             notifyMessage("Stopped a process which Pid is " + pid);
           } else {
             notifyMessage("You are not allowed to stop this process", DANGER);
