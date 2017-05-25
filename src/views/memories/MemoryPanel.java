@@ -22,10 +22,9 @@ public class MemoryPanel extends JPanel {
     String bytes = " bytes";
     setBorder(new EmptyBorder(10, 10, 10, 10));
     String name = memory.getName().equals("") ? NO_NAME : memory.getName();
-    add(new JLabel("Path: " + memory.getPath()));
     add(new JLabel("Toal: " + memory.getTotal() + bytes));
     add(new JLabel("Free: " + memory.getFree() + bytes));
     add(new JLabel("Usable: " + memory.getUsable() + bytes));
-    setBorder(BorderFactory.createTitledBorder(name));
+    setBorder(BorderFactory.createTitledBorder(memory.getPath()));
   }
 }
