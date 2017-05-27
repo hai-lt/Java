@@ -11,7 +11,7 @@ public class WindowProcess extends ProcessInfo {
   private static final int POSITION_PID = 1;
   private static final int POSITION_MEM = 4;
   private static final int POSITION_NAME = 0;
-  private final String KILL_PROCESS_COMMAND = "taskkill ";
+  private final String KILL_PROCESS_COMMAND = "taskkill /PID % /F";
 
   @Override
   protected String getKillProcessCommand() {

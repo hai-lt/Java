@@ -58,7 +58,8 @@ public abstract class ProcessInfo {
 
   public ProcessInfo kill() {
     try {
-      Runtime.getRuntime().exec(getKillProcessCommand() + getId());
+      String cmd = getKillProcessCommand().replace("%", String.valueOf(getId()));
+      Runtime.getRuntime().exec(cmd);
       return this;
     } catch (Exception e) {
       e.printStackTrace();
