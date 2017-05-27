@@ -101,10 +101,13 @@ public abstract class ProcessesManagement {
 
   @Override
   public String toString() {
+    if (processes.isEmpty()) {
+      return "";
+    }
     String string = "";
     for (ProcessInfo processInfo : processes) {
       string = string.concat(processInfo.toString()).concat("; ");
     }
-    return string;
+    return string.substring(0, string.length() - 2);
   }
 }

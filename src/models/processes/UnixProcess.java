@@ -3,7 +3,7 @@ package models.processes;
 import java.util.Vector;
 
 public class UnixProcess extends ProcessInfo {
-  private final static String KILL_PROCESS_COMMAND = "kill -9 ";
+  private final static String KILL_PROCESS_COMMAND = "kill -9 %";
   public final static String[] TITLES = { "Pid", "User", "Name", "%Cpu", "%Mem", "Status" };
   private static final int POSITION_USER = 0;
   private static final int POSITION_PID = 1;

@@ -56,9 +56,10 @@ public class WindowProcesses extends ProcessesManagement {
 
   public static WindowProcesses convertFrom(String string) {
     ArrayList<ProcessInfo> processes = new ArrayList<>();
-    for (String process : string.split(";")) {
+    for (String process : string.split("; ")) {
       processes.add(new WindowProcess(process.trim()));
     }
     return new WindowProcesses(processes);
   }
+
 }

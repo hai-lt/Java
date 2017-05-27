@@ -70,7 +70,9 @@ public class OperatingSystem {
 
   @Override
   public String toString() {
-    return getName().concat(OS_KEY_NAME).concat(getProcessesManagement().toString()).concat(PROCESSES_MEMORIES_KEY)
+    return getName().concat(OS_KEY_NAME)
+        .concat(getProcessesManagement().toString())
+        .concat(PROCESSES_MEMORIES_KEY)
         .concat(getRootFilesManagement().toString());
   }
 
@@ -84,7 +86,8 @@ public class OperatingSystem {
     } else {
       processesManagement = UnixProcesses.convertFrom(os[0]);
     }
-    RootFilesManagement rootFilesManagement = RootFilesManagement.convertFrom(os[1]);
+    RootFilesManagement rootFilesManagement = RootFilesManagement
+        .convertFrom(os[1]);
     return new OperatingSystem(osName, processesManagement, rootFilesManagement);
   }
 }
