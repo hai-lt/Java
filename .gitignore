@@ -13,3 +13,5 @@ hs_err_pid*
 *.conf
 *.sql
 /bin/
+/.idea/
+/Java.iml
