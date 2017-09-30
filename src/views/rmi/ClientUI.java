@@ -6,7 +6,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 import java.rmi.RemoteException;
 
 public class ClientUI extends JFrame {
@@ -15,7 +15,7 @@ public class ClientUI extends JFrame {
     public AtClient client;
     public ClientUI() {
         hostname = new JTextField("localhost");
-        filename = new JTextField();
+        filename = new JTextField("/Users/hailet./Documents/Personal/rmi.md");
         result = new JTextField();
         btConnect = new JButton("Ket Noi");
         btSend = new JButton("Send");
@@ -74,12 +74,15 @@ public class ClientUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArraySerializable arraySerializable = readFile();
+                filename.setText(arraySerializable.values.length + "");
                 try {
                     int response = client.clientAdd(arraySerializable);
                     result.setText(response + "");
                 } catch (RemoteException e1) {
                     e1.printStackTrace();
                     result.setText("Connection Failed");
+                } catch (NullPointerException e1) {
+                    result.setText("Connect rmi first");
                 }
             }
         };
@@ -100,7 +103,37 @@ public class ClientUI extends JFrame {
     }
 
     private ArraySerializable readFile(){
-        return  null;
+        FileReader fr = null;
+        int[] matrix;
+
+        try {
+            String content = "";
+            fr = new FileReader(filename.getText());
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            line = br.readLine();
+            String[] numbers = line.split(",");
+            int row = Integer.parseInt(numbers[0].trim());
+            int col = Integer.parseInt(numbers[1].trim());
+            matrix = new int[row * col];
+            int position = 0;
+            while ((line = br.readLine()) != null) {
+                for (String number :
+                        line.split(",")) {
+                    if (!number.trim().isEmpty()){
+                        matrix[position++] = Integer.parseInt(number.trim());
+                    }
+                }
+            }
+            if (position != row * col) {
+                throw new IOException();
+            }
+            filename.setText("Sending " + filename.getText());
+        } catch (Exception e) {
+            filename.setText(e.getMessage());
+            matrix = new int[0];
+        }
+        return  new ArraySerializable(matrix);
     }
 
     public static void main(String[] args) {
