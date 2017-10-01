@@ -1,4 +1,4 @@
-package views.rmi;
+//package views.rmi;
 
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 public class ClientUI extends JFrame {
     public JTextField hostname, filename, result;
     public JButton btConnect, btSend, btOpenFile;
-    public AtClient client;
+    public ClientImplement client;
     public ClientUI() {
         hostname = new JTextField("localhost");
         filename = new JTextField("/Users/hailet./Documents/Personal/rmi.md");
@@ -76,7 +76,7 @@ public class ClientUI extends JFrame {
                 ArraySerializable arraySerializable = readFile();
                 filename.setText(arraySerializable.values.length + "");
                 try {
-                    int response = client.clientAdd(arraySerializable);
+                    int response = client.requestSolving(arraySerializable);
                     result.setText(response + "");
                 } catch (RemoteException e1) {
                     e1.printStackTrace();
