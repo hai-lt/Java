@@ -10,6 +10,9 @@ import java.io.*;
 import java.rmi.RemoteException;
 
 public class ClientUI extends JFrame {
+    public final static String CONNECT = "Connect";
+    public final static String DISCONNECT = "Disconnect";
+
     public JTextField hostname, filename, result;
     public JButton btConnect, btSend, btOpenFile;
     public ClientImplement client;
@@ -17,7 +20,7 @@ public class ClientUI extends JFrame {
         hostname = new JTextField("localhost");
         filename = new JTextField("/Users/hailet./Documents/Personal/rmi.md");
         result = new JTextField();
-        btConnect = new JButton("Ket Noi");
+        btConnect = new JButton(CONNECT);
         btSend = new JButton("Send");
         btOpenFile = new JButton("OpenFile");
 
@@ -92,14 +95,32 @@ public class ClientUI extends JFrame {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client = new ClientImplement(hostname.getText());
-                try {
-                    client.connect();
-                } catch (RemoteException e1) {
-                    e1.printStackTrace();
+                if (btConnect.getText().equals(CONNECT)) {
+                    connect();
+                    btConnect.setText(DISCONNECT);
+                } else {
+                    disconnect();
+                    btConnect.setText(CONNECT);
                 }
             }
         };
+    }
+
+    private void connect() {
+        client = new ClientImplement(hostname.getText());
+        try {
+            client.connect();
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private void disconnect() {
+        try {
+            client.disconnect();
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
+        }
     }
 
     private ArraySerializable readFile(){

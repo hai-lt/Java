@@ -26,6 +26,13 @@ public class ClientImplement implements AtClient {
         }
     }
 
+    @Override
+    public void disconnect() throws RemoteException {
+        try {
+            atServer.injectClient(this);
+        } catch (Exception e) {}
+    }
+
 
 
     @Override

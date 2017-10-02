@@ -15,6 +15,16 @@ public class ServerImplement implements AtServer {
     }
 
     @Override
+    public void injectClient(AtClient client) throws RemoteException {
+        if (clients == null) {
+            System.out.println("Dont remove");
+            return;
+        }
+        clients.remove(client);
+        System.out.println("Client was disconected: " + clients.size());
+    }
+
+    @Override
     public int sendArray(ArraySerializable arraySerializable) throws RemoteException {
         int sum = 0;
         System.out.println("Connected " + clients.size() + "servers");
